@@ -114,7 +114,7 @@ export type IScreenTimeAPI = {
   getAuthorizationStatus: () => Promise<AuthorizationStatus>;
   getStore: () => Promise<ManagedSettingsStore>;
   displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
-  getFamilyActivitySelection: () => Promise<FamilyActivitySelection>;
+  getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
 };
 

@@ -236,10 +236,13 @@ struct RNTFamilyActivityPickerModalView: View {
   @objc public func setActivitySelection(_ selection: NSDictionary,
                                          resolver resolve: RCTPromiseResolveBlock,
                                          rejecter reject: RCTPromiseRejectBlock) -> Void {
-    if let data = try?JSONSerialization.data(withJSONObject: selection),
+    if let data = try? JSONSerialization.data(withJSONObject: selection),
        let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
       activitySelection = selection
+      resolve(nil)
+      return
     }
+    reject("0", "unable to parse selection", nil)
   }
   
 }
