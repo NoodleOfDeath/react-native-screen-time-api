@@ -23,8 +23,10 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
 RCT_EXTERN_METHOD(displayFamilyActivityPicker: (NSDictionary *) options
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(getStore: (RCTPromiseSenderBlock) callback)
-RCT_EXTERN_METHOD(getActivitySelection: (RCTPromiseSenderBlock) callback)
+RCT_EXTERN_METHOD(getStore: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getActivitySelection: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(setActivitySelection: (NSDictionary *) selection
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)

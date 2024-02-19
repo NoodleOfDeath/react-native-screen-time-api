@@ -225,12 +225,14 @@ struct RNTFamilyActivityPickerModalView: View {
     }
   }
   
-  @objc public func getStore(_ callback: RCTResponseSenderBlock) -> Void {
-    callback([encodedStore])
+  @objc public func getStore(_ resolve: @escaping RCTPromiseResolveBlock,
+                             rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    resolve(encodedStore)
   }
   
-  @objc public func getActivitySelection(_ callback: RCTResponseSenderBlock) -> Void {
-    callback([encodedSelection])
+  @objc public func getActivitySelection(_ resolve: @escaping RCTPromiseResolveBlock,
+                                         rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    resolve(encodedSelection)
   }
   
   @objc public func setActivitySelection(_ selection: NSDictionary,
