@@ -16,8 +16,20 @@ struct RNTFamilyActivityPickerView: View {
   
   @State var model = ScreenTimeAPI.shared;
   
+  let headerText: String
+  let footerText: String
+  
+  init(activitySelection: FamilyActivitySelection? = nil,
+       headerText: String = "",
+       footerText: String = "") {
+    self.headerText = headerText
+    self.footerText = footerText
+  }
+  
   var body: some View {
-    FamilyActivityPicker(headerText: "Test", selection: $model.activitySelection)
+    FamilyActivityPicker(headerText: headerText,
+                         footerText: footerText,
+                         selection: $model.activitySelection)
   }
   
 }
@@ -25,32 +37,52 @@ struct RNTFamilyActivityPickerView: View {
 struct RNTFamilyActivityPickerModalView: View {
   @Environment(\.presentationMode) var presentationMode
   
-  @State var model = ScreenTimeAPI.shared;
-  
   @State var activitySelection: FamilyActivitySelection
   
   let title: String
+  let headerText: String
+  let footerText: String
+  let onDismiss: (_ selection: NSDictionary?) -> Void
   
-  init(title: String) {
-    _activitySelection = State(initialValue: ScreenTimeAPI.shared.activitySelection)
+  init(activitySelection: FamilyActivitySelection? = nil,
+       title: String = "",
+       headerText: String = "",
+       footerText: String = "",
+       onDismiss: @escaping (_ selection: NSDictionary?) -> Void) {
+    _activitySelection = State(initialValue: activitySelection ?? ScreenTimeAPI.shared.activitySelection)
     self.title = title
+    self.headerText = headerText
+    self.footerText = footerText
+    self.onDismiss = onDismiss
+  }
+  
+  var encodedSelection: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(activitySelection) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
   }
   
   var cancelButton: some View {
-    Button("cancel") { presentationMode.wrappedValue.dismiss() }
+    Button("cancel") { 
+      presentationMode.wrappedValue.dismiss()
+      onDismiss(nil)
+    }
   }
   
   var doneButton: some View {
     Button("done") {
-      model.activitySelection = activitySelection
       presentationMode.wrappedValue.dismiss()
+      onDismiss(encodedSelection)
     }
   }
   
   var body: some View {
     NavigationView {
       VStack {
-        FamilyActivityPicker(headerText: "Test", selection: $activitySelection)
+        FamilyActivityPicker(headerText: headerText,
+                             footerText: footerText,
+                             selection: $activitySelection)
       }
       .navigationBarItems(leading: cancelButton, trailing: doneButton)
       .navigationTitle(title)
@@ -80,6 +112,13 @@ struct RNTFamilyActivityPickerModalView: View {
     return store
   }()
   
+  var encodedStore: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(store) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
+  }
+  
   var activitySelection = FamilyActivitySelection() {
     didSet(value) {
       let applications = value.applicationTokens
@@ -90,6 +129,13 @@ struct RNTFamilyActivityPickerModalView: View {
       ShieldSettings.ActivityCategoryPolicy.specific(categories, except: Set())
       store.shield.webDomains = webCategories
     }
+  }
+  
+  var encodedSelection: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(activitySelection) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
   }
   
   @objc static func requiresMainQueueSetup() -> Bool { return true }
@@ -158,18 +204,41 @@ struct RNTFamilyActivityPickerModalView: View {
     }
   }
   
-  @objc public func displayFamilyActivityPicker(_ resolve: @escaping RCTPromiseResolveBlock,
+  @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
+                                                resolver resolve: @escaping RCTPromiseResolveBlock,
                                                 rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    let title = options["title"] as? String ?? ""
+    let headerText = options["headerText"] as? String ?? ""
+    let footerText = options["footerText"] as? String ?? ""
     DispatchQueue.main.async {
-      let view = RNTFamilyActivityPickerModalView(title: "Test")
+      let view = RNTFamilyActivityPickerModalView(title: title,
+                                                  headerText: headerText,
+                                                  footerText: footerText) {
+        resolve($0)
+      }
       let vc = UIHostingController(rootView: view)
       guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
         reject("0", "could not find root view controller", nil)
         return
       }
-      rootViewController.present(vc, animated: true) {
-        resolve(nil)
-      }
+      rootViewController.present(vc, animated: true)
+    }
+  }
+  
+  @objc public func getStore(_ callback: RCTResponseSenderBlock) -> Void {
+    callback([encodedStore])
+  }
+  
+  @objc public func getActivitySelection(_ callback: RCTResponseSenderBlock) -> Void {
+    callback([encodedSelection])
+  }
+  
+  @objc public func setActivitySelection(_ selection: NSDictionary,
+                                         resolver resolve: RCTPromiseResolveBlock,
+                                         rejecter reject: RCTPromiseRejectBlock) -> Void {
+    if let data = try?JSONSerialization.data(withJSONObject: selection),
+       let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
+      activitySelection = selection
     }
   }
   

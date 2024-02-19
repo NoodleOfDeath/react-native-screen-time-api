@@ -20,9 +20,14 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(displayFamilyActivityPicker: (RCTPromiseResolveBlock) resolve
+RCT_EXTERN_METHOD(displayFamilyActivityPicker: (NSDictionary *) options
+                  resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-
+RCT_EXTERN_METHOD(getStore: (RCTPromiseSenderBlock) callback)
+RCT_EXTERN_METHOD(getActivitySelection: (RCTPromiseSenderBlock) callback)
+RCT_EXTERN_METHOD(setActivitySelection: (NSDictionary *) selection
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
 @end
 
 @interface RNTFamilyActivityPickerViewFactory: NSObject
