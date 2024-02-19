@@ -1,0 +1,25 @@
+{
+  "name": "react-native-screen-time-api",
+  "version": "0.0.1-prerelease",
+  "description": "React Native for accessing the iOS Screen Time and Android Digital Wellbeing APIs.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noodleofdeath/react-native-screen-time-api.git"
+  },
+  "keywords": [
+    "screen time",
+    "digital wellbeing",
+    "family controls",
+    "react",
+    "react-native",
+    "android",
+    "ios"
+  ],
+  "author": "noodleofdeath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noodleofdeath/react-native-screen-time-api/issues"
+  },
+  "homepage": "https://github.com/noodleofdeath/react-native-screen-time-api#readme"
+}
