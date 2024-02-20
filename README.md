@@ -19,19 +19,20 @@ or
 yarn add react-native-screen-time-api
 ```
 
+Then run `npx pod-install`.
+
 ## Usage
 
 ```javascript
 import { ScreenTime } from 'react-native-screen-time-api';
 
 React.useEffect(() => {
-  ScreenTime.requestAuthorization('individual').then(() => {
-    ScreenTime.getAuthorizationStatus().then((status) => {
-      console.log('Authorization status:', status); // 'approved', 'deniied', or 'notDetermined'
-      ScreenTime.displayFamilyActivityPicker().then((result) => {
-        console.log('Family activity picker result:', result);
-      });
-    });
+  ScreenTime.requestAuthorization('individual').then(async () => {
+    const status = await ScreenTime.getAuthorizationStatus()
+    console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
+    await selection = await ScreenTime.displayFamilyActivityPicker()
+    console.log('Family activity selection:', selection);
+    await ScreenTime.setActivitySelection(selection); // sets the shields
   });
 }, []);
 ```
