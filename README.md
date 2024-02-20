@@ -28,9 +28,9 @@ import { ScreenTime } from 'react-native-screen-time-api';
 
 React.useEffect(() => {
   ScreenTime.requestAuthorization('individual').then(async () => {
-    const status = await ScreenTime.getAuthorizationStatus()
+    const status = await ScreenTime.getAuthorizationStatus();
     console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
-    await selection = await ScreenTime.displayFamilyActivityPicker()
+    await selection = await ScreenTime.displayFamilyActivityPicker();
     console.log('Family activity selection:', selection);
     await ScreenTime.setActivitySelection(selection); // sets the shields
   });
