@@ -1,6 +1,17 @@
 # React Native Screen Time API <!-- omit in toc -->
 
-![NPM Downloads](https://img.shields.io/npm/dm/react-native-screen-time-api)
+<p align="center">
+  <a href="https://github.com/facebook/react-native/blob/HEAD/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Native is released under the MIT license." />
+  </a>
+  <a href="https://www.npmjs.org/package/react-native-screen-time-api">
+    <img src="https://img.shields.io/npm/v/react-native-screen-time-api?color=brightgreen&label=npm%20package" alt="Current npm package version." />
+  </a>
+  <a href="https://www.npmjs.org/package/react-native-screen-time-api">
+    <img src="https://img.shields.io/npm/dt/react-native-screen-time-api" alt="Npm downloads." />
+  </a>
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+</p>)
 
 Access the Screen Time API for iOS and Wellbeing API for Android (coming soon).
 
