@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/npm/dt/react-native-screen-time-api" alt="Npm downloads." />
   </a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-</p>)
+</p>
 
 Access the Screen Time API for iOS and Wellbeing API for Android (coming soon).
 
