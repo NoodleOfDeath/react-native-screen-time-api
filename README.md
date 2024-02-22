@@ -1,5 +1,7 @@
 # React Native Screen Time API <!-- omit in toc -->
 
+![NPM Downloads](https://img.shields.io/npm/dm/react-native-screen-time-api)
+
 Access the Screen Time API for iOS and Wellbeing API for Android (coming soon).
 
 ## Table of Contents <!-- omit in toc -->
@@ -20,6 +22,8 @@ yarn add react-native-screen-time-api
 ```
 
 Then run `npx pod-install`.
+
+**NOTE:** Screen time only works on device, not the simulator.
 
 ## Usage
 
