@@ -5,17 +5,11 @@ const { ScreenTimeAPI } = NativeModules;
 export type FamilyControlsMember = 'child' | 'individual';
 export type AuthorizationStatus = 'approved' | 'denied' | 'notDetermined';
 
-export type FamilyActivityPickerOptions = {
-  title?: String;
-  headerText?: String;
-  footerText?: String;
-};
-
 export type Token = {
   data: string;
 }
 
-export type FamilyActivitySelection = {
+export class FamilyActivitySelection {
   applicationTokens: Token[];
   categoryTokens: Token[];
   webDomainTokens: Token[];
@@ -23,6 +17,17 @@ export type FamilyActivitySelection = {
   untokenizedApplicationIdentifiers: string[];
   untokenizedCategoryIdentifiers: string[];
   untokenizedWebDomainIdentifiers: string[];
+};
+
+export const activitySelectionIsEmpty = (selection?: FamilyActivitySelection) => {
+  return !selection || (selection.applicationTokens.length === 0 && selection.categoryTokens.length === 0 && selection.webDomainTokens.length === 0)
+}
+
+export type FamilyActivityPickerOptions = {
+  title?: String;
+  headerText?: String;
+  footerText?: String;
+  activitySelection?: FamilyActivitySelection;
 };
 
 export type AccountSettings = {
@@ -116,6 +121,7 @@ export type IScreenTimeAPI = {
   displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
   getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
+  clearActivitySelection: () => Promise<void>;
 };
 
 const ScreenTime = ScreenTimeAPI as IScreenTimeAPI;

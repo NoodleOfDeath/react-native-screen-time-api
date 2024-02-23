@@ -21,5 +21,14 @@
   "bugs": {
     "url": "https://github.com/noodleofdeath/react-native-screen-time-api/issues"
   },
-  "homepage": "https://github.com/noodleofdeath/react-native-screen-time-api#readme"
+  "homepage": "https://github.com/noodleofdeath/react-native-screen-time-api#readme",
+  "dependencies": {
+    "react-native": "^0.73.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.58",
+    "@types/react-native": "^0.73.0",
+    "typescript": "^5.3.3"
+  }
 }

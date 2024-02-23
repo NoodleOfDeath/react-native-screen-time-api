@@ -56,24 +56,17 @@ struct RNTFamilyActivityPickerModalView: View {
     self.onDismiss = onDismiss
   }
   
-  var encodedSelection: NSDictionary? {
-    guard let jsonData = try? JSONEncoder().encode(activitySelection) else {
-      return nil
-    }
-    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
-  }
-  
   var cancelButton: some View {
     Button("cancel") {
       presentationMode.wrappedValue.dismiss()
-      onDismiss(nil)
+      onDismiss([:])
     }
   }
   
   var doneButton: some View {
     Button("done") {
       presentationMode.wrappedValue.dismiss()
-      onDismiss(encodedSelection)
+      onDismiss(activitySelection.encoded)
     }
   }
   
@@ -125,6 +118,47 @@ struct RNTFamilyActivityPickerModalView: View {
   
   @objc static func requiresMainQueueSetup() -> Bool { return true }
   
+  @objc public func getAuthorizationStatus(_ resolve: @escaping RCTPromiseResolveBlock,
+                                           rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    let _ = AuthorizationCenter.shared.$authorizationStatus.sink() {
+      switch $0 {
+      case .notDetermined:
+        resolve("notDetermined")
+      case .denied:
+        resolve("denied")
+      case .approved:
+        resolve("approved")
+      @unknown default:
+        reject("0", "Unhandled Authorization Status Type", nil)
+      }
+    }
+  }
+  
+  @objc public func getStore(_ resolve: @escaping RCTPromiseResolveBlock,
+                             rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    resolve(store.encoded)
+  }
+  
+  @objc public func getActivitySelection(_ resolve: @escaping RCTPromiseResolveBlock,
+                                         rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    resolve(activitySelection.encoded)
+  }
+  
+  @objc public func setActivitySelection(_ selection: NSDictionary,
+                                         resolver resolve: RCTPromiseResolveBlock,
+                                         rejecter reject: RCTPromiseRejectBlock) -> Void {
+    if let selection = FamilyActivitySelection.from(selection) {
+      activitySelection = selection
+      resolve(nil)
+      return
+    }
+    reject("0", "unable to parse selection", nil)
+  }
+  
+  @objc public func clearActivitySelection() -> Void {
+    activitySelection = FamilyActivitySelection()
+  }
+  
   @objc public func requestAuthorization(_ memberName: String,
                                          resolver resolve: @escaping RCTPromiseResolveBlock,
                                          rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
@@ -146,19 +180,26 @@ struct RNTFamilyActivityPickerModalView: View {
     }
   }
   
-  @objc public func getAuthorizationStatus(_ resolve: @escaping RCTPromiseResolveBlock,
-                                           rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    let _ = AuthorizationCenter.shared.$authorizationStatus.sink() {
-      switch $0 {
-      case .notDetermined:
-        resolve("notDetermined")
-      case .denied:
-        resolve("denied")
-      case .approved:
-        resolve("approved")
-      @unknown default:
-        reject("0", "Unhandled Authorization Status Type", nil)
+  @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
+                                                resolver resolve: @escaping RCTPromiseResolveBlock,
+                                                rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    let activitySelection = FamilyActivitySelection.from(options["activitySelection"] as? NSDictionary)
+    let title = options["title"] as? String ?? ""
+    let headerText = options["headerText"] as? String ?? ""
+    let footerText = options["footerText"] as? String ?? ""
+    DispatchQueue.main.async {
+      let view = RNTFamilyActivityPickerModalView(activitySelection: activitySelection,
+                                                  title: title,
+                                                  headerText: headerText,
+                                                  footerText: footerText) {
+        resolve($0)
       }
+      let vc = UIHostingController(rootView: view)
+      guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+        reject("0", "could not find root view controller", nil)
+        return
+      }
+      rootViewController.present(vc, animated: true)
     }
   }
   
@@ -187,54 +228,6 @@ struct RNTFamilyActivityPickerModalView: View {
       reject("0", error.localizedDescription, nil)
       print ("Could not start monitoring \(error)")
     }
-  }
-  
-  @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
-                                                resolver resolve: @escaping RCTPromiseResolveBlock,
-                                                rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    let activitySelection = FamilyActivitySelection.from(options["activitySelection"] as? NSDictionary)
-    let title = options["title"] as? String ?? ""
-    let headerText = options["headerText"] as? String ?? ""
-    let footerText = options["footerText"] as? String ?? ""
-    DispatchQueue.main.async {
-      let view = RNTFamilyActivityPickerModalView(activitySelection: activitySelection,
-                                                  title: title,
-                                                  headerText: headerText,
-                                                  footerText: footerText) {
-        resolve($0)
-      }
-      let vc = UIHostingController(rootView: view)
-      guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
-        reject("0", "could not find root view controller", nil)
-        return
-      }
-      rootViewController.present(vc, animated: true)
-    }
-  }
-  
-  @objc public func getStore(_ resolve: @escaping RCTPromiseResolveBlock,
-                             rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    resolve(store.encoded)
-  }
-  
-  @objc public func getActivitySelection(_ resolve: @escaping RCTPromiseResolveBlock,
-                                         rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    resolve(activitySelection.encoded)
-  }
-  
-  @objc public func setActivitySelection(_ selection: NSDictionary,
-                                         resolver resolve: RCTPromiseResolveBlock,
-                                         rejecter reject: RCTPromiseRejectBlock) -> Void {
-    if let selection = FamilyActivitySelection.from(selection) {
-      activitySelection = selection
-      resolve(nil)
-      return
-    }
-    reject("0", "unable to parse selection", nil)
-  }
-  
-  @objc public func clearActivitySelection() -> Void {
-    activitySelection = FamilyActivitySelection()
   }
   
 }
