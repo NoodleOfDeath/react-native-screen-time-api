@@ -9,7 +9,6 @@ export type FamilyActivityPickerOptions = {
   title?: String;
   headerText?: String;
   footerText?: String;
-  activitySelection?: FamilyActivitySelection;
 };
 
 export type Token = {
@@ -117,7 +116,6 @@ export type IScreenTimeAPI = {
   displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
   getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
-  clearActivitySelection: () => Promise<void>;
 };
 
 const ScreenTime = ScreenTimeAPI as IScreenTimeAPI;

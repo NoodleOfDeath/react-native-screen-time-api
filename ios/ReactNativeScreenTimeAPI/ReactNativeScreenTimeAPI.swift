@@ -64,7 +64,7 @@ struct RNTFamilyActivityPickerModalView: View {
   }
   
   var cancelButton: some View {
-    Button("cancel") {
+    Button("cancel") { 
       presentationMode.wrappedValue.dismiss()
       onDismiss(nil)
     }
@@ -112,15 +112,30 @@ struct RNTFamilyActivityPickerModalView: View {
     return store
   }()
   
-  var activitySelection = FamilyActivitySelection() {
-    willSet(value) {
-      store.shield.applications = value.applicationTokens.isEmpty ? nil : value.applicationTokens
-      store.shield.applicationCategories =
-      ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
-      store.shield.webDomains = value.webDomainTokens
-      store.shield.webDomainCategories =
-      ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
+  var encodedStore: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(store) else {
+      return nil
     }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
+  }
+  
+  var activitySelection = FamilyActivitySelection() {
+    didSet(value) {
+      let applications = value.applicationTokens
+      let categories = value.categoryTokens
+      let webCategories = value.webDomainTokens
+      store.shield.applications = applications.isEmpty ? nil : applications
+      store.shield.applicationCategories =
+      ShieldSettings.ActivityCategoryPolicy.specific(categories, except: Set())
+      store.shield.webDomains = webCategories
+    }
+  }
+  
+  var encodedSelection: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(activitySelection) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
   }
   
   @objc static func requiresMainQueueSetup() -> Bool { return true }
@@ -192,13 +207,11 @@ struct RNTFamilyActivityPickerModalView: View {
   @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
                                                 resolver resolve: @escaping RCTPromiseResolveBlock,
                                                 rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    let activitySelection = FamilyActivitySelection.from(options["activitySelection"] as? NSDictionary)
     let title = options["title"] as? String ?? ""
     let headerText = options["headerText"] as? String ?? ""
     let footerText = options["footerText"] as? String ?? ""
     DispatchQueue.main.async {
-      let view = RNTFamilyActivityPickerModalView(activitySelection: activitySelection,
-                                                  title: title,
+      let view = RNTFamilyActivityPickerModalView(title: title,
                                                   headerText: headerText,
                                                   footerText: footerText) {
         resolve($0)
@@ -214,27 +227,24 @@ struct RNTFamilyActivityPickerModalView: View {
   
   @objc public func getStore(_ resolve: @escaping RCTPromiseResolveBlock,
                              rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    resolve(store.encoded)
+    resolve(encodedStore)
   }
   
   @objc public func getActivitySelection(_ resolve: @escaping RCTPromiseResolveBlock,
                                          rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    resolve(activitySelection.encoded)
+    resolve(encodedSelection)
   }
   
   @objc public func setActivitySelection(_ selection: NSDictionary,
                                          resolver resolve: RCTPromiseResolveBlock,
                                          rejecter reject: RCTPromiseRejectBlock) -> Void {
-    if let selection = FamilyActivitySelection.from(selection) {
+    if let data = try? JSONSerialization.data(withJSONObject: selection),
+       let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
       activitySelection = selection
       resolve(nil)
       return
     }
     reject("0", "unable to parse selection", nil)
-  }
-  
-  @objc public func clearActivitySelection() -> Void {
-    activitySelection = FamilyActivitySelection()
   }
   
 }

@@ -30,7 +30,6 @@ RCT_EXTERN_METHOD(getActivitySelection: (RCTPromiseResolveBlock) resolve
 RCT_EXTERN_METHOD(setActivitySelection: (NSDictionary *) selection
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(clearActivitySelection)
 @end
 
 @interface RNTFamilyActivityPickerViewFactory: NSObject

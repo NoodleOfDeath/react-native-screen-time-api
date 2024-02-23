@@ -52,8 +52,8 @@
 			isa = PBXGroup;
 			children = (
 				CDD7B3592B83D1DF00C1C6D9 /* Encodable.swift */,
-				CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */,
 				CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */,
+				CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */,
 				CDD7B33C2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h */,
 			);
 			path = ReactNativeScreenTimeAPI;
