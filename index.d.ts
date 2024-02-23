@@ -20,7 +20,8 @@ export class FamilyActivitySelection {
 };
 
 export const activitySelectionIsEmpty = (selection?: FamilyActivitySelection) => {
-  return !selection || (selection.applicationTokens.length === 0 && selection.categoryTokens.length === 0 && selection.webDomainTokens.length === 0)
+  if (!selection) return true;
+  return Object.values(selection).every((v) => !v || Array.isArray(v) && v.length === 0);
 }
 
 export type FamilyActivityPickerOptions = {
