@@ -246,3 +246,33 @@ extension ManagedSettingsStore: Encodable {
   }
   
 }
+
+extension ManagedSettingsStore {
+  
+  public var encoded: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(self) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
+  }
+  
+}
+
+extension FamilyActivitySelection {
+  
+  static public func from(_ object: NSDictionary?) -> FamilyActivitySelection? {
+    guard let object else { return nil }
+    guard let data = try? JSONSerialization.data(withJSONObject: object),
+          let value = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) 
+    else { return nil }
+    return value
+  }
+  
+  public var encoded: NSDictionary? {
+    guard let jsonData = try? JSONEncoder().encode(self) else {
+      return nil
+    }
+    return try? JSONSerialization.jsonObject(with: jsonData) as? NSDictionary
+  }
+  
+}
