@@ -47,7 +47,10 @@ React.useEffect(() => {
     console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
     await selection = await ScreenTime.displayFamilyActivityPicker();
     console.log('Family activity selection:', selection);
-    await ScreenTime.setActivitySelection(selection); // sets the shields
+    // selection will be `null` if user presses cancel
+    if (selection) {
+      await ScreenTime.setActivitySelection(selection); // sets the shields
+    }
   });
 }, []);
 ```

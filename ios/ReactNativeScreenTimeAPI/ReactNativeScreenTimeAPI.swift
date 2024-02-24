@@ -59,7 +59,7 @@ struct RNTFamilyActivityPickerModalView: View {
   var cancelButton: some View {
     Button("cancel") {
       presentationMode.wrappedValue.dismiss()
-      onDismiss([:])
+      onDismiss(nil)
     }
   }
   
