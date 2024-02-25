@@ -34,8 +34,6 @@ yarn add react-native-screen-time-api
 
 Then run `npx pod-install`.
 
-**NOTE:** Screen time only works on device, not the simulator.
-
 ## Usage
 
 ```javascript
