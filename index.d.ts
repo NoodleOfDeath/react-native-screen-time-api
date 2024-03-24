@@ -1,7 +1,3 @@
-import { NativeModules, requireNativeComponent } from 'react-native';
-
-const { ScreenTimeAPI } = NativeModules;
-
 export type FamilyControlsMember = 'child' | 'individual';
 export type AuthorizationStatus = 'approved' | 'denied' | 'notDetermined';
 
@@ -17,12 +13,9 @@ export class FamilyActivitySelection {
   untokenizedApplicationIdentifiers: string[];
   untokenizedCategoryIdentifiers: string[];
   untokenizedWebDomainIdentifiers: string[];
-};
-
-export const activitySelectionIsEmpty = (selection?: FamilyActivitySelection) => {
-  if (!selection) return true;
-  return Object.values(selection).every((v) => !v || Array.isArray(v) && v.length === 0);
 }
+
+export declare function activitySelectionIsEmpty(selection?: FamilyActivitySelection): boolean;
 
 export type FamilyActivityPickerOptions = {
   title?: String;
@@ -123,10 +116,12 @@ export type IScreenTimeAPI = {
   getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
   clearActivitySelection: () => Promise<void>;
+  setDenyAppInstallation: () => Promise<void>;
+  setDenyAppRemoval: () => Promise<void>;
 };
 
-const ScreenTime = ScreenTimeAPI as IScreenTimeAPI;
+declare const ScreenTime: IScreenTimeAPI;
 
-const FamilyActivityPickerView = requireNativeComponent('RNTFamilyActivityPickerView');
+declare const FamilyActivityPickerView: React.ComponentType<FamilyActivityPickerOptions>;
 
 export { FamilyActivityPickerView, ScreenTime };

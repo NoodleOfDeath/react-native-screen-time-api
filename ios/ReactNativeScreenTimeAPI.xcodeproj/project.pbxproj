@@ -14,6 +14,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CD9047C02B8AFA4E00F3B75F /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = ../../index.js; sourceTree = "<group>"; };
+		CD9047C12B8AFA4E00F3B75F /* index.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; name = index.d.ts; path = ../../index.d.ts; sourceTree = "<group>"; };
 		CDD7B3392B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactNativeScreenTimeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD7B33C2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeScreenTimeAPI-Bridging-Header.h"; sourceTree = "<group>"; };
 		CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNativeScreenTimeAPI.swift; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		CDD7B33B2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI */ = {
 			isa = PBXGroup;
 			children = (
+				CD9047C02B8AFA4E00F3B75F /* index.js */,
+				CD9047C12B8AFA4E00F3B75F /* index.d.ts */,
 				CDD7B3592B83D1DF00C1C6D9 /* Encodable.swift */,
 				CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */,
 				CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */,
