@@ -57,14 +57,14 @@ struct RNTFamilyActivityPickerModalView: View {
   }
   
   var cancelButton: some View {
-    Button("cancel") {
+    Button("Cancel") {
       presentationMode.wrappedValue.dismiss()
       onDismiss(nil)
     }
   }
   
   var doneButton: some View {
-    Button("done") {
+    Button("Done") {
       presentationMode.wrappedValue.dismiss()
       onDismiss(activitySelection.encoded)
     }
@@ -201,6 +201,14 @@ struct RNTFamilyActivityPickerModalView: View {
       }
       rootViewController.present(vc, animated: true)
     }
+  }
+  
+  @objc public func setDenyAppInstallation(_ deny: Bool) {
+    self.store.application.denyAppInstallation = deny
+  }
+  
+  @objc public func setDenyAppRemovavl(_ deny: Bool) {
+    self.store.application.denyAppRemoval = deny
   }
   
   @objc public func initiateMonitoring(_ startTimestamp: String = "00:00",
