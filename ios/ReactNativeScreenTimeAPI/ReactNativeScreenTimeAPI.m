@@ -14,6 +14,8 @@
 RCT_EXTERN_METHOD(requestAuthorization: (NSString *) memberName
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(revokeAuthorization: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(getAuthorizationStatus: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(getStore: (RCTPromiseResolveBlock) resolve

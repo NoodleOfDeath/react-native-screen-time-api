@@ -180,26 +180,15 @@ struct RNTFamilyActivityPickerModalView: View {
     }
   }
   
-  @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
-                                                resolver resolve: @escaping RCTPromiseResolveBlock,
-                                                rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    let activitySelection = FamilyActivitySelection.from(options["activitySelection"] as? NSDictionary)
-    let title = options["title"] as? String ?? ""
-    let headerText = options["headerText"] as? String ?? ""
-    let footerText = options["footerText"] as? String ?? ""
-    DispatchQueue.main.async {
-      let view = RNTFamilyActivityPickerModalView(activitySelection: activitySelection,
-                                                  title: title,
-                                                  headerText: headerText,
-                                                  footerText: footerText) {
-        resolve($0)
+  @objc public func revokeAuthorization(_ resolve: @escaping RCTPromiseResolveBlock,
+                                        rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    AuthorizationCenter.shared.revokeAuthorization {
+      do {
+        try $0.get()
+        resolve(nil)
+      } catch {
+        reject("0", error.localizedDescription, nil)
       }
-      let vc = UIHostingController(rootView: view)
-      guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
-        reject("0", "could not find root view controller", nil)
-        return
-      }
-      rootViewController.present(vc, animated: true)
     }
   }
   
@@ -235,6 +224,29 @@ struct RNTFamilyActivityPickerModalView: View {
     catch {
       reject("0", error.localizedDescription, nil)
       print ("Could not start monitoring \(error)")
+    }
+  }
+  
+  @objc public func displayFamilyActivityPicker(_ options: NSDictionary,
+                                                resolver resolve: @escaping RCTPromiseResolveBlock,
+                                                rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    let activitySelection = FamilyActivitySelection.from(options["activitySelection"] as? NSDictionary)
+    let title = options["title"] as? String ?? ""
+    let headerText = options["headerText"] as? String ?? ""
+    let footerText = options["footerText"] as? String ?? ""
+    DispatchQueue.main.async {
+      let view = RNTFamilyActivityPickerModalView(activitySelection: activitySelection,
+                                                  title: title,
+                                                  headerText: headerText,
+                                                  footerText: footerText) {
+        resolve($0)
+      }
+      let vc = UIHostingController(rootView: view)
+      guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+        reject("0", "could not find root view controller", nil)
+        return
+      }
+      rootViewController.present(vc, animated: true)
     }
   }
   

@@ -110,14 +110,15 @@ export type ManagedSettingsStore = {
 
 export type IScreenTimeAPI = {
   requestAuthorization: (member: FamilyControlsMember) => Promise<void>;
+  revokeAuthorization: () => Promise<void>;
   getAuthorizationStatus: () => Promise<AuthorizationStatus>;
   getStore: () => Promise<ManagedSettingsStore>;
-  displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
   getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
   clearActivitySelection: () => Promise<void>;
   setDenyAppInstallation: () => Promise<void>;
   setDenyAppRemoval: () => Promise<void>;
+  displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
 };
 
 declare const ScreenTime: IScreenTimeAPI;
