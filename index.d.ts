@@ -116,8 +116,8 @@ export type IScreenTimeAPI = {
   getActivitySelection: () => Promise<FamilyActivitySelection>;
   setActivitySelection: (selection: FamilyActivitySelection) => Promise<void>;
   clearActivitySelection: () => Promise<void>;
-  setDenyAppInstallation: () => Promise<void>;
-  setDenyAppRemoval: () => Promise<void>;
+  setDenyAppInstallation: (deny: boolean) => Promise<void>;
+  setDenyAppRemoval: (deny: boolean) => Promise<void>;
   displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
 };
 
