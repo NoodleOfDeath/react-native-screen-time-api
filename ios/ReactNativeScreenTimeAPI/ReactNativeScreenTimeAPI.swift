@@ -205,7 +205,7 @@ struct RNTFamilyActivityPickerModalView: View {
   }
   
   @objc public func enableAppInstallation() -> Void  {
-    self.store.application.denyAppRemoval = false
+    self.store.application.denyAppInstallation = false
   }
   
   @objc public func initiateMonitoring(_ startTimestamp: String = "00:00",
