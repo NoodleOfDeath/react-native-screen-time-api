@@ -196,7 +196,7 @@ struct RNTFamilyActivityPickerModalView: View {
     self.store.application.denyAppInstallation = deny
   }
   
-  @objc public func setDenyAppRemovavl(_ deny: Bool) {
+  @objc public func setDenyAppRemoval(_ deny: Bool) {
     self.store.application.denyAppRemoval = deny
   }
   
