@@ -192,12 +192,20 @@ struct RNTFamilyActivityPickerModalView: View {
     }
   }
   
-  @objc public func setDenyAppInstallation(_ deny: Bool) {
-    self.store.application.denyAppInstallation = deny
+  @objc public func denyAppRemoval() -> Void {
+    self.store.application.denyAppRemoval = true
   }
   
-  @objc public func setDenyAppRemoval(_ deny: Bool) {
-    self.store.application.denyAppRemoval = deny
+  @objc public func enableAppRemoval() -> Void {
+    self.store.application.denyAppRemoval = false
+  }
+  
+  @objc public func denyAppInstallation() -> Void {
+    self.store.application.denyAppInstallation = true
+  }
+  
+  @objc public func enableAppInstallation() -> Void  {
+    self.store.application.denyAppRemoval = false
   }
   
   @objc public func initiateMonitoring(_ startTimestamp: String = "00:00",
