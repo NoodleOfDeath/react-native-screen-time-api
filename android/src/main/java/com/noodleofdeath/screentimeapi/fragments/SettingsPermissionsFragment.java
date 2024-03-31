@@ -158,21 +158,15 @@ public class SettingsPermissionsFragment extends Fragment implements CompoundBut
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (isChecked) {
-			switch (buttonView.getId()) {
-				case R.id.switchWriteSettingsPermission:
-					requestWriteSettingsPermission();
-					break;
-				
-				case R.id.switchOverlayPermission:
-					requestOverlayPermission();
-					break;
-				
-				case R.id.switchPackageUsagePermission:
-					requestPackageUsagePermission();
-					break;
-				case R.id.switchDeviceAdminPermission:
-					requestDeviceAdminPermission();
-					break;
+			int id = buttonView.getId();
+			if (id == R.id.switchWriteSettingsPermission) {
+				requestWriteSettingsPermission();
+			} else if (id == R.id.switchOverlayPermission) {
+				requestOverlayPermission();
+			} else if (id == R.id.switchPackageUsagePermission) {
+				requestPackageUsagePermission();
+			} else if (id == R.id.switchDeviceAdminPermission) {
+				requestDeviceAdminPermission();
 			}
 		}
 		

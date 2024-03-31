@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -28,32 +29,25 @@ import com.noodleofdeath.screentimeapi.interfaces.OnPermissionExplanationListene
 import com.noodleofdeath.screentimeapi.utils.Constant;
 
 public class PhoneCallsPermissionsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, OnPermissionExplanationListener {
-	private Switch switchPhoneStatePermission;
-	private Switch switchReadCallLogPermission;
-	private Switch switchReadContactsPermission;
+	private SwitchCompat switchPhoneStatePermission;
+	private SwitchCompat switchReadCallLogPermission;
+	private SwitchCompat switchReadContactsPermission;
 	private Context context;
 	private Activity activity;
 	private View layout;
 	private FragmentManager fragmentManager;
 	private OnFragmentChangeListener onFragmentChangeListener;
-	private Button btnPermissionsPhoneCallsPrev;
-	private Button btnPermissionsPhoneCallsNext;
-	
+
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (isChecked) {
-			switch (buttonView.getId()) {
-				case R.id.switchPhoneStatePermission:
-					requestPhoneStatePermission();
-					break;
-				
-				case R.id.switchReadCallLogPermission:
-					requestReadCallLogPermission();
-					break;
-				
-				case R.id.switchReadContactsPermission:
-					requestReadContactsPermission();
-					break;
+			int id = buttonView.getId();
+			if (id == R.id.switchPhoneStatePermission) {
+				requestPhoneStatePermission();
+			} else if (id == R.id.switchReadCallLogPermission) {
+				requestReadCallLogPermission();
+			} else if (id == R.id.switchReadContactsPermission) {
+				requestReadContactsPermission();
 			}
 		}
 	}
@@ -160,8 +154,8 @@ public class PhoneCallsPermissionsFragment extends Fragment implements CompoundB
 		layout = view;
 		fragmentManager = getFragmentManager();
 		onFragmentChangeListener = (OnFragmentChangeListener) activity;
-		
-		btnPermissionsPhoneCallsNext = view.findViewById(R.id.btnPermissionsPhoneCallsNext);
+
+		Button btnPermissionsPhoneCallsNext = view.findViewById(R.id.btnPermissionsPhoneCallsNext);
 		btnPermissionsPhoneCallsNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -171,8 +165,8 @@ public class PhoneCallsPermissionsFragment extends Fragment implements CompoundB
 				
 			}
 		});
-		
-		btnPermissionsPhoneCallsPrev = view.findViewById(R.id.btnPermissionsPhoneCallsPrev);
+
+		Button btnPermissionsPhoneCallsPrev = view.findViewById(R.id.btnPermissionsPhoneCallsPrev);
 		btnPermissionsPhoneCallsPrev.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -1,4 +1,4 @@
-package com.mansourappdevelopment.androidapp.kidsafe;
+package com.noodleofdeath.screentimeapi;
 
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -6,7 +6,7 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 public class NotificationChannelCreator extends Application {
-	public static final String CHANNEL_ID = "com.mansourappdevelopment.androidapp.kidsafe.utils.CHANNEL_ID";
+	public static final String CHANNEL_ID = "com.noodleofdeath.screentimeapi.utils.CHANNEL_ID";
 	
 	@Override
 	public void onCreate() {

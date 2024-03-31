@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -28,32 +29,25 @@ import com.noodleofdeath.screentimeapi.interfaces.OnPermissionExplanationListene
 import com.noodleofdeath.screentimeapi.utils.Constant;
 
 public class SMSPermissionsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, OnPermissionExplanationListener {
-	private Switch switchSendSmsPermission;
-	private Switch switchReadSmsPermission;
-	private Switch switchReceiveSmsPermission;
+	private SwitchCompat switchSendSmsPermission;
+	private SwitchCompat switchReadSmsPermission;
+	private SwitchCompat switchReceiveSmsPermission;
 	private Context context;
 	private Activity activity;
 	private View layout;
 	private FragmentManager fragmentManager;
 	private OnFragmentChangeListener onFragmentChangeListener;
-	private Button btnPermissionsSmsNext;
-	private Button btnPermissionsSmsPrev;
-	
+
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (isChecked) {
-			switch (buttonView.getId()) {
-				case R.id.switchSendSmsPermission:
-					requestSendSmsPermission();
-					break;
-				
-				case R.id.switchReadSmsPermission:
-					requestReadSmsPermission();
-					break;
-				
-				case R.id.switchReceiveSmsPermission:
-					requestReceiveSmsPermission();
-					break;
+			int id = buttonView.getId();
+			if (id == R.id.switchSendSmsPermission) {
+				requestSendSmsPermission();
+			} else if (id == R.id.switchReadSmsPermission) {
+				requestReadSmsPermission();
+			} else if (id == R.id.switchReceiveSmsPermission) {
+				requestReceiveSmsPermission();
 			}
 		}
 	}
@@ -162,8 +156,8 @@ public class SMSPermissionsFragment extends Fragment implements CompoundButton.O
 		layout = view;
 		fragmentManager = getFragmentManager();
 		onFragmentChangeListener = (OnFragmentChangeListener) activity;
-		
-		btnPermissionsSmsNext = view.findViewById(R.id.btnPermissionsSmsNext);
+
+		Button btnPermissionsSmsNext = view.findViewById(R.id.btnPermissionsSmsNext);
 		btnPermissionsSmsNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -172,8 +166,8 @@ public class SMSPermissionsFragment extends Fragment implements CompoundButton.O
 				else startInformationDialogFragment(getString(R.string.please_allow_permissions));
 			}
 		});
-		
-		btnPermissionsSmsPrev = view.findViewById(R.id.btnPermissionsSmsPrev);
+
+		Button btnPermissionsSmsPrev = view.findViewById(R.id.btnPermissionsSmsPrev);
 		btnPermissionsSmsPrev.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

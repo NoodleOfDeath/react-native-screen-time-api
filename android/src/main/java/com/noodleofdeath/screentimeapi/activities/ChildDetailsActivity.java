@@ -75,22 +75,18 @@ public class ChildDetailsActivity extends AppCompatActivity {
 				Fragment selectedFragment = null;
 				
 				Bundle bundle = new Bundle();
-				
-				switch (menuItem.getItemId()) {
-					case R.id.navApps:
-						selectedFragment = new AppsFragment();
-						//bundle.putParcelableArrayList(APPS_EXTRA, apps);  //not needed since we're sending it from
-						//selectedFragment.setArguments(bundle);            //the ParentSignedInActivity
-						break;
-					case R.id.navLocation:
-						selectedFragment = new LocationFragment();
-						//bundle.putString(CHILD_EMAIL_EXTRA, childEmail);
-						//selectedFragment.setArguments(bundle);
-						break;
-					case R.id.navActivityLog:
-						selectedFragment = new ActivityLogFragment();
-						break;
-					
+
+				int itemId = menuItem.getItemId();
+				if (itemId == R.id.navApps) {
+					selectedFragment = new AppsFragment();
+					//bundle.putParcelableArrayList(APPS_EXTRA, apps);  //not needed since we're sending it from
+					//selectedFragment.setArguments(bundle);            //the ParentSignedInActivity
+				} else if (itemId == R.id.navLocation) {
+					selectedFragment = new LocationFragment();
+					//bundle.putString(CHILD_EMAIL_EXTRA, childEmail);
+					//selectedFragment.setArguments(bundle);
+				} else if (itemId == R.id.navActivityLog) {
+					selectedFragment = new ActivityLogFragment();
 				}
 				
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, selectedFragment).commit();
