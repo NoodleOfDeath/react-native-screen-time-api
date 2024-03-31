@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8dp"
+    android:background="@color/white"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    android:layoutDirection="locale"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgChild"
+                android:layout_width="@dimen/circular_image_width_small"
+                android:layout_height="@dimen/circular_image_height_small"
+                android:layout_margin="@dimen/margin_4dp"
+                android:src="@drawable/ic_face"
+                app:civ_border_color="@color/flatui_clouds"
+                app:civ_border_width="@dimen/circular_image_border_small" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_4dp">
+
+                <TextView
+                    android:id="@+id/txtChildName"
+                    style="@style/CardHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:text="@string/child_name" />
+
+
+                <Switch
+                    android:id="@+id/switchLockPhone"
+                    style="@style/CardSwitch" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="64dp">
+
+            <TextView
+                style="@style/CardHeader"
+                android:layout_width="wrap_content"
+                android:text="@string/web_filter"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/switchWebFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_margin="@dimen/margin_4dp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutDeletedApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_4dp"
+                android:background="@color/flatui_asbestos" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_4dp"
+                    android:src="@drawable/ic_delete" />
+
+                <TextView
+                    android:id="@+id/txtDeletedApp"
+                    style="@style/CardBody"
+                    android:layout_width="wrap_content"
+                    android:text="@string/deleted_the_app" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

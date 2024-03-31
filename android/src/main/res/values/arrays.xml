@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="geo_fence_entries">
+        <item>You</item>
+        <item>Him</item>
+    </string-array>
+
+    <string-array name="app_languages">
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
+
+    <string-array name="timer_entries">
+        <item>Immediately</item>
+        <item>Specify a period</item>
+    </string-array>
+
+
+</resources>

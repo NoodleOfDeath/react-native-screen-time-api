@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8dp"
+    android:background="@color/white"
+    android:layoutDirection="locale"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/circular_image_width_small"
+            android:layout_height="@dimen/circular_image_height_small"
+            android:layout_margin="@dimen/margin_4dp">
+
+            <TextView
+                android:id="@+id/txtAppBackground"
+                style="@style/CardTextBackground" />
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txtAppName"
+                style="@style/CardHeader"
+                android:layout_width="150dp"
+                android:layout_gravity="start|center"
+                android:text="@string/child_app_name" />
+
+            <Switch
+                android:id="@+id/switchAppState"
+                style="@style/CardSwitch" />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

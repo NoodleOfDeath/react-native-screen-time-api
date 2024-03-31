@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="circular_image_border_large">4dp</dimen>
+    <dimen name="circular_image_width_large">96dp</dimen>
+    <dimen name="circular_image_height_large">96dp</dimen>
+
+    <dimen name="circular_image_border_small">2dp</dimen>
+    <dimen name="circular_image_width_small">48dp</dimen>
+    <dimen name="circular_image_height_small">48dp</dimen>
+
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_24dp">24dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="margin_48dp">48dp</dimen>
+    <dimen name="margin_64dp">64dp</dimen>
+    <dimen name="margin_128dp">128dp</dimen>
+
+
+    <dimen name="padding_2dp">2dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="padding_24dp">24dp</dimen>
+    <dimen name="padding_32dp">32dp</dimen>
+
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="text_size_24sp">24sp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
+
+
+    <dimen name="card_corner_radius">3dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
+</resources>
