@@ -38,7 +38,37 @@ public class ScreenTimeApiModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void test(ReadableMap params, Promise promise) {
+    public void getBlockedApplications(Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void setBlockedApplications(ReadableMap params, Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void clearBlockedApplications(Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void denyAppRemoval(Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void allowAppRemoval(Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void denyAppInstallation(Promise promise) {
+        promise.resolve("");
+    }
+
+    @ReactMethod
+    public void allowAppInstallation(Promise promise) {
         promise.resolve("");
     }
 

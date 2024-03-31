@@ -260,7 +260,7 @@ export type IScreenTimeAPI = {
    * @platform android
    * @returns {Promise<void>}
    */
-  enableAppInstallation: () => Promise<void>;
+  allowAppInstallation: () => Promise<void>;
 
   /**
    * @platform ios
@@ -274,7 +274,7 @@ export type IScreenTimeAPI = {
    * @platform android
    * @returns {Promise<void>}
    */
-  enableAppRemoval: () => Promise<void>;
+  allowAppRemoval: () => Promise<void>;
 
   /**
    * @platform ios

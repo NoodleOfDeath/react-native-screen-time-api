@@ -196,7 +196,7 @@ struct RNTFamilyActivityPickerModalView: View {
     self.store.application.denyAppRemoval = true
   }
   
-  @objc public func enableAppRemoval() -> Void {
+  @objc public func allowAppRemoval() -> Void {
     self.store.application.denyAppRemoval = false
   }
   
@@ -204,7 +204,7 @@ struct RNTFamilyActivityPickerModalView: View {
     self.store.application.denyAppInstallation = true
   }
   
-  @objc public func enableAppInstallation() -> Void  {
+  @objc public func allowAppInstallation() -> Void  {
     self.store.application.denyAppInstallation = false
   }
   
