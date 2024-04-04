@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ScreenTimeApiPackage implements ReactPackage {
+public class ScreenTimeAPIPackage implements ReactPackage {
 
   @NonNull
   @Override
   public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
-    modules.add(new ScreenTimeApiModule(reactContext));
+    modules.add(new ScreenTimeAPIModule(reactContext));
     return modules;
   }
 
