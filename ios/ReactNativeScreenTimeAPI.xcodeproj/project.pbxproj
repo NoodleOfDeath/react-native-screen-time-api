@@ -16,8 +16,8 @@
 /* Begin PBXFileReference section */
 		CD9047C02B8AFA4E00F3B75F /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = ../../index.js; sourceTree = "<group>"; };
 		CD9047C12B8AFA4E00F3B75F /* index.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; name = index.d.ts; path = ../../index.d.ts; sourceTree = "<group>"; };
-		CDAC24FD2BCAC7080031E791 /* ReactNativeScreenTimeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeScreenTimeAPI.h; sourceTree = "<group>"; };
 		CDAC24FE2BCAC7370031E791 /* ReactNativeScreenTimeAPI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = ReactNativeScreenTimeAPI.podspec; path = ../../ReactNativeScreenTimeAPI.podspec; sourceTree = "<group>"; };
+		CDAC25082BCAEEA10031E791 /* ReactNativeScreenTimeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeScreenTimeAPI.h; sourceTree = "<group>"; };
 		CDD7B3392B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactNativeScreenTimeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD7B33C2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeScreenTimeAPI-Bridging-Header.h"; sourceTree = "<group>"; };
 		CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNativeScreenTimeAPI.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 				CD9047C12B8AFA4E00F3B75F /* index.d.ts */,
 				CDAC24FE2BCAC7370031E791 /* ReactNativeScreenTimeAPI.podspec */,
 				CDD7B3592B83D1DF00C1C6D9 /* Encodable.swift */,
-				CDAC24FD2BCAC7080031E791 /* ReactNativeScreenTimeAPI.h */,
+				CDAC25082BCAEEA10031E791 /* ReactNativeScreenTimeAPI.h */,
 				CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */,
 				CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */,
 				CDD7B33C2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h */,

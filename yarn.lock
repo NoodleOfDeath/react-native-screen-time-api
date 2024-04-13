@@ -3048,6 +3048,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-screen-time-api@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/react-native-screen-time-api/-/react-native-screen-time-api-0.0.18.tgz#446277e90c03c0f01410362394abf0b350d6ad14"
+  integrity sha512-azOn/Rwy6fniDgSVXkHcWXwv3qtlpSo839uxjf2I3tK/Qb4u5gSrQ0WLQ+oCIV93OyvCngKhkXG7eaMT1fwHsA==
+  dependencies:
+    react-native "^0.73.4"
+
 react-native@*, react-native@^0.73.4:
   version "0.73.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.4.tgz#81e07d4e7b6308c4649d5fa24038c0e87b17f2e1"
