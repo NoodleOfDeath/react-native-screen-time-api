@@ -52,3 +52,11 @@ React.useEffect(() => {
   });
 }, []);
 ```
+
+## Release a new version
+
+```bash
+npm login
+
+npm publish
+```
