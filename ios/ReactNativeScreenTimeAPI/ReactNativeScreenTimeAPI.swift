@@ -105,15 +105,12 @@ public class ScreenTimeAPI: NSObject {
 
   var activitySelection = FamilyActivitySelection() {
     willSet(value) {
-      store.shield.applications = value.applicationTokens.isEmpty ? nil : value.applicationTokens
-      store.shield.applicationCategories =
-        ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
-      store.shield.webDomains = value.webDomainTokens
-      store.shield.webDomainCategories =
-        ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
+        // We whitelist by default, TODO: possibility to change blacklist/whitelist behavior
+        store.shield.applicationCategories = .all(except: value.applicationTokens)
+        store.shield.webDomainCategories = .all(except: value.webDomainTokens)
     }
   }
-
+    
   @objc
   static func requiresMainQueueSetup() -> Bool { return true }
 
@@ -141,6 +138,21 @@ public class ScreenTimeAPI: NSObject {
   {
     resolve?(store.encoded)
   }
+    
+    @objc
+    public func setWebsitesWhitelist(_ websites: String,
+                                     resolver resolve: RCTPromiseResolveBlock? = nil,
+                                     rejecter reject: RCTPromiseRejectBlock? = nil)
+    {
+        /*let domains = Set(websites.map { website in
+            WebDomain(domain: website as! String)
+        })*/
+        let domains: Set<WebDomain> = [WebDomain(domain: websites)]
+        
+        store.webContent.blockedByFilter = .all(except: domains)
+        
+        resolve?(nil)
+    }
 
   @objc
   public func getActivitySelection(_ resolve: RCTPromiseResolveBlock? = nil,
