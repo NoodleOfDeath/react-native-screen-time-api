@@ -140,18 +140,16 @@ public class ScreenTimeAPI: NSObject {
   }
     
     @objc
-    public func setWebsitesWhitelist(_ websites: String,
+    public func setWebsitesWhitelist(_ websites: NSArray,
                                      resolver resolve: RCTPromiseResolveBlock? = nil,
                                      rejecter reject: RCTPromiseRejectBlock? = nil)
     {
-        /*let domains = Set(websites.map { website in
+        let domains = Set(websites.map { website in
             WebDomain(domain: website as! String)
-        })*/
-        let domains: Set<WebDomain> = [WebDomain(domain: websites)]
+        })
         
         store.webContent.blockedByFilter = .all(except: domains)
         
-        resolve?(nil)
     }
 
   @objc

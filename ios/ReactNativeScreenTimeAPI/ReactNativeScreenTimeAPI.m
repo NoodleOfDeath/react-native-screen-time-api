@@ -37,7 +37,7 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(setWebsitesWhitelist: (NSString *) websites
+RCT_EXTERN_METHOD(setWebsitesWhitelist: (NSArray *) websites
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 @end
