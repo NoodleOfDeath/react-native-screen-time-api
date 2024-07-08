@@ -1,19 +1,19 @@
 /**
  * @platform ios
  */
-export type FamilyControlsMember = 'child' | 'individual';
+export type FamilyControlsMember = "child" | "individual";
 
 /**
  * @platform ios
  */
-export type AuthorizationStatus = 'approved' | 'denied' | 'notDetermined';
+export type AuthorizationStatus = "approved" | "denied" | "notDetermined";
 
 /**
  * @platform ios
  */
 export type Token = {
   data: string;
-}
+};
 
 /**
  * @platform ios
@@ -26,13 +26,15 @@ export type FamilyActivitySelection = {
   untokenizedApplicationIdentifiers: string[];
   untokenizedCategoryIdentifiers: string[];
   untokenizedWebDomainIdentifiers: string[];
-}
+};
 
 /**
- * 
- * @param {FamilyActivitySelection|undefined} selection 
+ *
+ * @param {FamilyActivitySelection|undefined} selection
  */
-export declare function activitySelectionIsEmpty(selection?: FamilyActivitySelection): boolean;
+export declare function activitySelectionIsEmpty(
+  selection?: FamilyActivitySelection
+): boolean;
 
 /**
  * @platform ios
@@ -49,7 +51,7 @@ export type FamilyActivityPickerOptions = {
  */
 export type AccountSettings = {
   lockAccounts?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -72,7 +74,7 @@ export type Application = {
    * @platform android
    */
   packageName?: string;
-}
+};
 
 /**
  * @platform ios
@@ -81,7 +83,7 @@ export type ApplicationSettings = {
   blockedApplications?: Application[];
   denyAppInstallation?: boolean;
   denyAppRemoval?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -90,7 +92,7 @@ export type AppStoreSettings = {
   denyInAppPurchases?: boolean;
   maximumRating?: number;
   requirePasswordForPurchases?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -99,14 +101,14 @@ export type CellularSettings = {
   lockAppCellularData?: boolean;
   lockCellularPlan?: boolean;
   lockESIM?: boolean;
-}
+};
 
 /**
  * @platform ios
  */
 export type DateAndTimeSettings = {
   requireAutomaticDateAndTime?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -114,7 +116,7 @@ export type DateAndTimeSettings = {
 export type GameCenterSettings = {
   denyAddingFriends?: boolean;
   denyMultiplayerGaming?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -125,14 +127,14 @@ export type MediaSettings = {
   denyMusicService?: boolean;
   maximumMovieRating?: number;
   maximumTVShowRating?: number;
-}
+};
 
 /**
  * @platform ios
  */
 export type PasscodeSettings = {
   lockPasscode?: boolean;
-}
+};
 
 /**
  * @platform ios
@@ -140,7 +142,7 @@ export type PasscodeSettings = {
 export type SafariSettings = {
   denyAutoFill?: boolean;
   cookiePolicy?: string;
-}
+};
 
 /**
  * @platform ios
@@ -150,21 +152,21 @@ export type ShieldSettings = {
   applicationCategories?: string;
   webDomains?: boolean;
   webDomainCategories?: string;
-}
+};
 
 /**
  * @platform ios
  */
 export type SiriSettings = {
   denySiri?: boolean;
-}
+};
 
 /**
  * @platform ios
  */
 export type WebContentSettings = {
   blockedByFilter?: string;
-}
+};
 
 /**
  * @platform ios
@@ -182,10 +184,9 @@ export type ManagedSettingsStore = {
   shield: ShieldSettings;
   siri: SiriSettings;
   webContent: WebContentSettings;
-}
+};
 
 export type IScreenTimeAPI = {
-
   /**
    * @platform ios
    * @param {FamilyControlsMember} member
@@ -206,7 +207,7 @@ export type IScreenTimeAPI = {
 
   /**
    * @platform ios
-   * @returns {Promise<ManagedSettingsStore>} 
+   * @returns {Promise<ManagedSettingsStore>}
    */
   getStore: () => Promise<ManagedSettingsStore>;
 
@@ -280,7 +281,21 @@ export type IScreenTimeAPI = {
    * @platform ios
    * @returns {Promise<FamilyActivitySelection>}
    */
-  displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
+  displayFamilyActivityPicker: (
+    options: FamilyActivityPickerOptions
+  ) => Promise<FamilyActivitySelection>;
+
+  /**
+   * @platform ios
+   * @returns {Promise<void>}
+   */
+  setWebsitesWhitelist: (websites: string[]) => Promise<void>;
+
+  /**
+   * @platform ios
+   * @returns {Promise<void>}
+   */
+  resetRestrictions: () => Promise<void>;
 };
 
 declare const ScreenTime: IScreenTimeAPI;
