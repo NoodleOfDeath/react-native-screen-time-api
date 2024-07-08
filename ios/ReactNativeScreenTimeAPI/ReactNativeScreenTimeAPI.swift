@@ -103,7 +103,7 @@ public class ScreenTimeAPI: NSObject {
     return store
   }()
 
-  var activitySelection = FamilyActivitySelection() {
+  var activitySelection = FamilyActivitySelection(includeEntireCategory: true) {
     willSet(value) {
         // We whitelist by default, TODO: possibility to change blacklist/whitelist behavior
         store.shield.applicationCategories = .all(except: value.applicationTokens)
