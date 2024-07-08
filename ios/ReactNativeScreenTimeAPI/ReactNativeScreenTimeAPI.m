@@ -40,6 +40,7 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
 RCT_EXTERN_METHOD(setWebsitesWhitelist: (NSArray *) websites
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(resetRestrictions)
 @end
 
 @interface RNTFamilyActivityPickerViewFactory: NSObject

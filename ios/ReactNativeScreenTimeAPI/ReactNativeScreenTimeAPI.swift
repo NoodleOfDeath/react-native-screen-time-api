@@ -151,6 +151,7 @@ public class ScreenTimeAPI: NSObject {
         store.webContent.blockedByFilter = .all(except: domains)
         
     }
+    
 
   @objc
   public func getActivitySelection(_ resolve: RCTPromiseResolveBlock? = nil,
@@ -213,6 +214,14 @@ public class ScreenTimeAPI: NSObject {
       }
     }
   }
+    
+    
+    @objc
+    public func resetRestrictions() {
+        store.webContent.blockedByFilter = WebContentSettings.FilterPolicy.none
+        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy<Application>.none
+        store.shield.webDomainCategories = ShieldSettings.ActivityCategoryPolicy<WebDomain>.none
+    }
 
   @objc
   public func denyAppRemoval() {
