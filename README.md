@@ -55,6 +55,8 @@ React.useEffect(() => {
 
 ## Release a new version
 
+First, bump the version in the `package.json`
+
 ```bash
 npm login
 
