@@ -184,6 +184,26 @@ export type ManagedSettingsStore = {
   webContent: WebContentSettings;
 }
 
+/**
+ * @platform ios
+ */
+export type ScreenTimeConfiguration = { 
+  enforcesChildRestrictions: boolean;
+};
+
+/**
+ * @platform ios
+ */
+export declare class DateInterval {
+
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+
+  constructor(startDate: Date, durationOrEndDate: number | Date);
+
+}
+
 export type IScreenTimeAPI = {
 
   /**
@@ -281,6 +301,28 @@ export type IScreenTimeAPI = {
    * @returns {Promise<FamilyActivitySelection>}
    */
   displayFamilyActivityPicker: (options: FamilyActivityPickerOptions) => Promise<FamilyActivitySelection>;
+
+  /**
+   * @platform ios
+   * @returns {Promise<void>}
+   */
+  deleteAllWebHistory: (identifier?: string) => Promise<void>;
+
+  /**
+   * @platform ios
+   * @param {DateInterval} interval
+   * @returns {Promise<void>}
+   */
+  deleteWebHistoryDuring(interval: DateInterval, identifier?: string): Promise<void>;
+
+  /**
+   * @platform ios
+   * @param {string} url
+   * @returns {Promise<void>}
+   */
+  deleteWebHistoryForURL(url: string, identifier?: string): Promise<void>;
+
+
 };
 
 declare const ScreenTime: IScreenTimeAPI;
