@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
 </p>
 
-Access the Screen Time API for iOS and Wellbeing API for Android (coming soon).
+Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). This is far from complete and needs more work. Please don't hesitate to request specific screen time features
 
 ## Table of Contents <!-- omit in toc -->
 
