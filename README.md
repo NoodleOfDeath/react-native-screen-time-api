@@ -43,6 +43,9 @@ React.useEffect(() => {
   ScreenTime.requestAuthorization('individual').then(async () => {
     const status = await ScreenTime.getAuthorizationStatus();
     console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
+    if (status !== 'approved') {
+      throw new Error('user denied screen time access');
+    }
     await selection = await ScreenTime.displayFamilyActivityPicker();
     console.log('Family activity selection:', selection);
     // selection will be `null` if user presses cancel
