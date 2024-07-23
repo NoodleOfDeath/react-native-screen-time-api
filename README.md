@@ -35,7 +35,22 @@ yarn add react-native-screen-time-api
 Then run `npx pod-install`.
 
 ## Usage
+### Add FamilyControls capability to your app
+See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
 
+Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>com.apple.developer.family-controls</key>
+    <true/>
+  </dict>
+</plist>
+```
+
+### Sample code
 ```javascript
 import { ScreenTime } from 'react-native-screen-time-api';
 
@@ -46,7 +61,7 @@ React.useEffect(() => {
     if (status !== 'approved') {
       throw new Error('user denied screen time access');
     }
-    await selection = await ScreenTime.displayFamilyActivityPicker();
+    const selection = await ScreenTime.displayFamilyActivityPicker();
     console.log('Family activity selection:', selection);
     // selection will be `null` if user presses cancel
     if (selection) {
