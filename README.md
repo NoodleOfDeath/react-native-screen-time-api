@@ -35,6 +35,7 @@ yarn add react-native-screen-time-api
 Then run `npx pod-install`.
 
 ## Usage
+
 ### Add FamilyControls capability to your app
 See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
 
