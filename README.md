@@ -38,6 +38,9 @@ Then run `npx pod-install`.
 ### Add FamilyControls capability to your app
 See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
 
+In addition to adding the Family Controls entitlement, for distribution, you will also need to [request Family Controls capabilities](https://developer.apple.com/contact/request/family-controls-distribution)
+
+
 Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
