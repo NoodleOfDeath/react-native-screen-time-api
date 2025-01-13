@@ -71,6 +71,8 @@ React.useEffect(() => {
     if (selection) {
       await ScreenTime.setActivitySelection(selection); // sets the shields
     }
+  }).catch((e) => {
+    console.error(e);
   });
 }, []);
 ```
