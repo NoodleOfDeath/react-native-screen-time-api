@@ -9,6 +9,7 @@ import DeviceActivity
 import FamilyControls
 import Foundation
 import ManagedSettings
+import ScreenTime
 
 import SwiftUI
 
@@ -244,6 +245,67 @@ public class ScreenTimeAPI: NSObject {
   }
 
   @objc
+  public func deleteAllWebHistory(_ identifier: String? = nil,
+                                  resolver resolve: RCTPromiseResolveBlock? = nil,
+                                  rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteAllHistory()
+      } else {
+        STWebHistory().deleteAllHistory()
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
+
+  @objc
+  public func deleteWebHistoryDuring(_ interval: NSDictionary,
+                                     identifier: String? = nil,
+                                     resolver resolve: RCTPromiseResolveBlock? = nil,
+                                     rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    guard let startDateStr = interval["startDate"] as? String,
+          let startDate = DateFormatter().date(from: startDateStr),
+          let durationStr = interval["duration"] as? String,
+          let duration = Double(durationStr)
+    else {
+      reject?("0", "invalid date intrerval provided", nil)
+      return
+    }
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
+      } else {
+        STWebHistory().deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
+
+  @objc
+  public func deleteWebHistoryForURL(_ url: String,
+                                     identifier: String? = nil,
+                                     resolver resolve: RCTPromiseResolveBlock? = nil,
+                                     rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteHistory(for: URL(url, strategy: .url))
+      } else {
+        try STWebHistory().deleteHistory(for: URL(url, strategy: .url))
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
+
+  @objc
   public func initiateMonitoring(_ startTimestamp: String = "00:00",
                                  end endTimestamp: String = "23:59",
                                  resolver resolve: RCTPromiseResolveBlock? = nil,
@@ -258,11 +320,11 @@ public class ScreenTimeAPI: NSObject {
       }
       let scheduleStart = Calendar.current.dateComponents([.hour, .minute], from: start)
       let scheduleEnd = Calendar.current.dateComponents([.hour, .minute], from: end)
-      let schedule = DeviceActivitySchedule(intervalStart: scheduleStart,
-                                            intervalEnd: scheduleEnd,
-                                            repeats: true,
-                                            warningTime: nil)
-      let center = DeviceActivityCenter()
+      let schedule: DeviceActivitySchedule = .init(intervalStart: scheduleStart,
+                                                   intervalEnd: scheduleEnd,
+                                                   repeats: true,
+                                                   warningTime: nil)
+      let center: DeviceActivityCenter = .init()
       try center.startMonitoring(.daily, during: schedule)
       resolve?(nil)
     } catch {
