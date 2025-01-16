@@ -37,6 +37,9 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getActivityLabel:(NSString *)token
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
 @end
 
 @interface RNTFamilyActivityPickerViewFactory: NSObject

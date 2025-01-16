@@ -12,6 +12,7 @@ import ManagedSettings
 import ScreenTime
 
 import SwiftUI
+import ImageRenderer
 
 struct RNTFamilyActivityPickerView: View {
   @State var model = ScreenTimeAPI.shared
@@ -149,6 +150,49 @@ public class ScreenTimeAPI: NSObject {
   {
     resolve?(activitySelection.encoded)
   }
+
+@objc
+public func getActivityLabel(_ token: String,
+                           resolver resolve: @escaping RCTPromiseResolveBlock,
+                           rejecter reject: @escaping RCTPromiseRejectBlock) {
+    guard let data = Data(base64Encoded: token) else {
+        reject("ERROR", "Invalid token format", nil)
+        return
+    }
+    
+    do {
+        if let activityToken = try NSKeyedUnarchiver.unarchivedObject(ofClass: FamilyActivitySelection.ActivityToken.self, from: data) {
+            let label = FamilyActivityLabel(token: activityToken)
+            
+            // Create and render the icon view
+            let iconView = FamilyActivityIconView(token: activityToken)
+            let renderer = ImageRenderer(content: iconView)
+            renderer.scale = UIScreen.main.scale
+            
+            // Convert icon to base64 string if available
+            let iconBase64: String? = renderer.uiImage.flatMap { image in
+                image.pngData()?.base64EncodedString()
+            }
+            
+            // Get both the title and the subtitle
+            label.title { title in
+                label.subtitle { subtitle in
+                    let result: [String: Any] = [
+                        "title": title ?? "",
+                        "subtitle": subtitle ?? "",
+                        "type": String(describing: type(of: activityToken)),
+                        "icon": iconBase64 ?? ""
+                    ]
+                    resolve(result)
+                }
+            }
+        } else {
+            reject("ERROR", "Could not unarchive token", nil)
+        }
+    } catch {
+        reject("ERROR", "Error unarchiving token: \(error.localizedDescription)", nil)
+    }
+}
 
   @objc
   public func setActivitySelection(_ selection: NSDictionary,

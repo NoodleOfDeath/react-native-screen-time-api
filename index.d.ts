@@ -194,6 +194,16 @@ export type ScreenTimeConfiguration = {
 /**
  * @platform ios
  */
+export type ActivityLabel = {
+  title: string;
+  subtitle: string;
+  type: string;
+  icon: string;
+};
+
+/**
+ * @platform ios
+ */
 export declare class DateInterval {
 
   startDate: Date;
@@ -322,7 +332,12 @@ export type IScreenTimeAPI = {
    */
   deleteWebHistoryForURL(url: string, identifier?: string): Promise<void>;
 
-
+  /**
+   * @platform ios
+   * @param {string} token Base64 encoded activity token
+   * @returns {Promise<ActivityLabel>}
+   */
+  getActivityLabel(token: string): Promise<ActivityLabel>;
 };
 
 declare const ScreenTime: IScreenTimeAPI;
