@@ -11,6 +11,8 @@
 #import <React/RCTViewManager.h>
 
 @interface RCT_EXTERN_MODULE(ScreenTimeAPI, NSObject)
+
+// managed settings
 RCT_EXTERN_METHOD(requestAuthorization: (NSString *) memberName
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
@@ -37,6 +39,20 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+
+// web history
+RCT_EXTERN_METHOD(deleteAllWebHistory: (NSString *) identifier
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(deleteAllWebHistoryDuring: (NSDictionary *) timeInterval
+                  identifier: (NSString *) identifier
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(deleteAllWebHistoryFor: (NSString *) url
+                  identifier: (NSString *) identifier
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+
 @end
 
 @interface RNTFamilyActivityPickerViewFactory: NSObject
