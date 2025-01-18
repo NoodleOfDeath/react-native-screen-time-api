@@ -59,27 +59,34 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 
 ### Sample code
 ```typescript
+import React from 'react';
+
 import { ScreenTime } from 'react-native-screen-time-api';
 
-React.useEffect(() => {
-  try {
-    ScreenTime.requestAuthorization('individual').then(async () => {
-      const status = await ScreenTime.getAuthorizationStatus();
-      console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
-      if (status !== 'approved') {
-        throw new Error('user denied screen time access');
-      }
-      const selection = await ScreenTime.displayFamilyActivityPicker();
-      console.log('Family activity selection:', selection);
-      // selection will be `null` if user presses cancel
-      if (selection) {
-        await ScreenTime.setActivitySelection(selection); // sets the shields
-      }
-    })
-  } catch (error) {
-    console.error(error);
-  }
-}, []);
+export const MyComponent = () => {
+
+  React.useEffect(() => {
+    try {
+      ScreenTime.requestAuthorization('individual').then(async () => {
+        const status = await ScreenTime.getAuthorizationStatus();
+        console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
+        if (status !== 'approved') {
+          throw new Error('user denied screen time access');
+        }
+        const selection = await ScreenTime.displayFamilyActivityPicker();
+        console.log('Family activity selection:', selection);
+        // selection will be `null` if user presses cancel
+        if (selection) {
+          await ScreenTime.setActivitySelection(selection); // sets the shields
+        }
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  return null;
+}
 ```
 
 ### Getting Application/Category Names
@@ -87,21 +94,32 @@ React.useEffect(() => {
 After the use has given authorization you can then use the tokens they select to retrieve the names of each application or category selected
 
 ```typescript
-const getNames = React.useCallback(async () => {
-  try {
+import React from 'react';
 
-    const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
-    const applicationName = await ScreenTime.getApplicationName(applicationToken);
-    console.log('Application name:', applicationName);
+import { ScreenTime } from 'react-native-screen-time-api';
 
-    const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
-    const categoryName = await ScreenTime.getCategoryName(categoryToken);
-    console.log('Category name:', categoryName);
-    
-  } catch (error) {
-    console.error(error);
-  }
-}, []);
-...
-<Button onPress={ getName() }>Get Names</Button<
+export const MyComponent = () => {
+
+  React.useEffect(() => 'request auth', []);
+
+  const getNames = React.useCallback(async () => {
+    try {
+  
+      const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const applicationName = await ScreenTime.getApplicationName(applicationToken);
+      console.log('Application name:', applicationName);
+  
+      const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const categoryName = await ScreenTime.getCategoryName(categoryToken);
+      console.log('Category name:', categoryName);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  return (
+    <Button onPress={ getName() }>Get Names</Button>
+  );
+}
 ```
