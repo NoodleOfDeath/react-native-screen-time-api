@@ -39,6 +39,12 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getApplicationName (NSString *) token
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getCategoryName: (NSString *) token
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
 
 // web history
 RCT_EXTERN_METHOD(deleteAllWebHistory: (NSString *) identifier

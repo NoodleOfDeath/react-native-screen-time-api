@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD8108A52D3C003E000F1354 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8108A42D3C003E000F1354 /* OCR.swift */; };
+		CD8108A72D3C00F5000F1354 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8108A62D3C00F2000F1354 /* Extensions.swift */; };
 		CDD7B34A2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD7B33C2B83BE3F00C1C6D9 /* ReactNativeScreenTimeAPI-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CDD7B3542B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */; };
 		CDD7B3562B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CD8108A42D3C003E000F1354 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
+		CD8108A62D3C00F2000F1354 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CD9047C02B8AFA4E00F3B75F /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.js; path = ../../index.js; sourceTree = "<group>"; };
 		CD9047C12B8AFA4E00F3B75F /* index.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; name = index.d.ts; path = ../../index.d.ts; sourceTree = "<group>"; };
 		CDAC24FE2BCAC7370031E791 /* ReactNativeScreenTimeAPI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = ReactNativeScreenTimeAPI.podspec; path = ../../ReactNativeScreenTimeAPI.podspec; sourceTree = "<group>"; };
@@ -58,7 +62,9 @@
 				CD9047C02B8AFA4E00F3B75F /* index.js */,
 				CD9047C12B8AFA4E00F3B75F /* index.d.ts */,
 				CDAC24FE2BCAC7370031E791 /* ReactNativeScreenTimeAPI.podspec */,
+				CD8108A62D3C00F2000F1354 /* Extensions.swift */,
 				CDD7B3592B83D1DF00C1C6D9 /* Encodable.swift */,
+				CD8108A42D3C003E000F1354 /* OCR.swift */,
 				CDAC25082BCAEEA10031E791 /* ReactNativeScreenTimeAPI.h */,
 				CDD7B3552B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m */,
 				CDD7B3532B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift */,
@@ -148,6 +154,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD8108A72D3C00F5000F1354 /* Extensions.swift in Sources */,
+				CD8108A52D3C003E000F1354 /* OCR.swift in Sources */,
 				CDD7B3562B83BEF900C1C6D9 /* ReactNativeScreenTimeAPI.m in Sources */,
 				CDD7B35A2B83D1DF00C1C6D9 /* Encodable.swift in Sources */,
 				CDD7B3542B83BE8100C1C6D9 /* ReactNativeScreenTimeAPI.swift in Sources */,

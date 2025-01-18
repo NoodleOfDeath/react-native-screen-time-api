@@ -13,9 +13,87 @@ import ScreenTime
 
 import SwiftUI
 
-enum RNTScreenTimeError: Error {
-  case unableToDecodeFamilySelectionObject(String)
+struct RNTFamilyActivityPickerView: View {
+  @State var model = ScreenTimeAPI.shared
+  
+  let headerText: String
+  let footerText: String
+  
+  init(activitySelection _: FamilyActivitySelection? = nil,
+       headerText: String = "",
+       footerText: String = "")
+  {
+    self.headerText = headerText
+    self.footerText = footerText
+  }
+  
+  var body: some View {
+    FamilyActivityPicker(headerText: headerText,
+                         footerText: footerText,
+                         selection: $model.activitySelection)
+  }
 }
+
+struct RNTFamilyActivityPickerModalView: View {
+  @Environment(\.presentationMode) var presentationMode
+  
+  @State var activitySelection: FamilyActivitySelection
+  
+  let title: String
+  let headerText: String
+  let footerText: String
+  let onDismiss: (_ selection: NSDictionary?) -> Void
+  
+  init(activitySelection: FamilyActivitySelection? = nil,
+       title: String = "",
+       headerText: String = "",
+       footerText: String = "",
+       onDismiss: @escaping (_ selection: NSDictionary?) -> Void)
+  {
+    _activitySelection = State(initialValue: activitySelection ?? ScreenTimeAPI.shared.activitySelection)
+    self.title = title
+    self.headerText = headerText
+    self.footerText = footerText
+    self.onDismiss = onDismiss
+  }
+  
+  var cancelButton: some View {
+    Button("Cancel") {
+      presentationMode.wrappedValue.dismiss()
+      onDismiss(nil)
+    }
+  }
+  
+  var doneButton: some View {
+    Button("Done") {
+      presentationMode.wrappedValue.dismiss()
+      onDismiss(activitySelection.encoded)
+    }
+  }
+  
+  var body: some View {
+    NavigationView {
+      VStack {
+        FamilyActivityPicker(headerText: headerText,
+                             footerText: footerText,
+                             selection: $activitySelection)
+      }
+      .navigationBarItems(leading: cancelButton, trailing: doneButton)
+      .navigationTitle(title)
+      .navigationBarTitleDisplayMode(.inline)
+    }
+  }
+}
+
+@objc(RNTFamilyActivityPickerViewFactory)
+public class RNTFamilyActivityPickerViewFactory: NSObject {
+  @objc public static func view() -> UIView {
+    let view = RNTFamilyActivityPickerView()
+    let vc = UIHostingController(rootView: view)
+    return vc.view
+  }
+}
+
 
 @objc(ScreenTimeAPI)
 public class ScreenTimeAPI: NSObject {
@@ -176,6 +254,36 @@ public class ScreenTimeAPI: NSObject {
     } catch {
       reject?("0", error.localizedDescription, nil)
       print("Could not start monitoring \(error)")
+    }
+  }
+  
+  @objc
+  public func getApplicationName(_ token: String,
+                                 resolver resolve: @escaping RCTPromiseResolveBlock,
+                                 rejecter reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      guard let image = ApplicationToken.asImage(token: token) else {
+        reject("0", "unable to parse token", nil)
+        return
+      }
+      detectNamedEntities(in: image) { boxes in
+        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+      }
+    }
+  }
+  
+  @objc
+  public func getCategoryName(_ token: String,
+                              resolver resolve: @escaping RCTPromiseResolveBlock,
+                              rejecter reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      guard let image = ActivityCategoryToken.asImage(token: token) else {
+        reject("0", "unable to parse token", nil)
+        return
+      }
+      detectNamedEntities(in: image) { boxes in
+        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+      }
     }
   }
   

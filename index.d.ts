@@ -295,6 +295,18 @@ export type IScreenTimeAPI = {
    * @returns {Promise<void>}
    */
   allowAppRemoval: () => Promise<void>;
+  
+  /**
+   * @platform ios
+   * @returns {Promise<string>}
+   */
+  getApplicationName: (token: string) => Promise<string>
+  
+  /**
+   * @platform ios
+   * @returns {Promise<string>}
+   */
+  getCategoryName: (token: string) => Promise<string>
 
   /**
    * @platform ios
