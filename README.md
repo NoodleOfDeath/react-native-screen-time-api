@@ -19,6 +19,9 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
+  - [Sample code](#sample-code)
+  - [Getting Application/Category Names](#getting-applicationcategory-names)
 
 ## Installation
 
@@ -55,24 +58,48 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ```
 
 ### Sample code
-```javascript
+```typescript
 import { ScreenTime } from 'react-native-screen-time-api';
 
 React.useEffect(() => {
-  ScreenTime.requestAuthorization('individual').then(async () => {
-    const status = await ScreenTime.getAuthorizationStatus();
-    console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
-    if (status !== 'approved') {
-      throw new Error('user denied screen time access');
+  try {
+    ScreenTime.requestAuthorization('individual').then(async () => {
+      const status = await ScreenTime.getAuthorizationStatus();
+      console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
+      if (status !== 'approved') {
+        throw new Error('user denied screen time access');
+      }
+      const selection = await ScreenTime.displayFamilyActivityPicker();
+      console.log('Family activity selection:', selection);
+      // selection will be `null` if user presses cancel
+      if (selection) {
+        await ScreenTime.setActivitySelection(selection); // sets the shields
+      }
+    })
+  } catch (error) {
+    console.error(error);
+  }
+}, []);
+```
+
+### Getting Application/Category Names
+
+```typescript
+React.useEffect(() => {
+  (async () => {
+    try {
+
+      const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const applicationName = await ScreenTime.getApplicationName(applicationToken);
+      console.log('Application name:', applicationName);
+
+      const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const categoryName = await ScreenTime.getCategoryName(categoryToken);
+      console.log('Category name:', categoryName);
+      
+    } catch (error) {
+      console.error(error);
     }
-    const selection = await ScreenTime.displayFamilyActivityPicker();
-    console.log('Family activity selection:', selection);
-    // selection will be `null` if user presses cancel
-    if (selection) {
-      await ScreenTime.setActivitySelection(selection); // sets the shields
-    }
-  }).catch((e) => {
-    console.error(e);
-  });
+  })();
 }, []);
 ```

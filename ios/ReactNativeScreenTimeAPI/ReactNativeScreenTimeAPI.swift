@@ -15,10 +15,10 @@ import SwiftUI
 
 struct RNTFamilyActivityPickerView: View {
   @State var model = ScreenTimeAPI.shared
-
+  
   let headerText: String
   let footerText: String
-
+  
   init(activitySelection _: FamilyActivitySelection? = nil,
        headerText: String = "",
        footerText: String = "")
@@ -26,7 +26,7 @@ struct RNTFamilyActivityPickerView: View {
     self.headerText = headerText
     self.footerText = footerText
   }
-
+  
   var body: some View {
     FamilyActivityPicker(headerText: headerText,
                          footerText: footerText,
@@ -36,14 +36,14 @@ struct RNTFamilyActivityPickerView: View {
 
 struct RNTFamilyActivityPickerModalView: View {
   @Environment(\.presentationMode) var presentationMode
-
+  
   @State var activitySelection: FamilyActivitySelection
-
+  
   let title: String
   let headerText: String
   let footerText: String
   let onDismiss: (_ selection: NSDictionary?) -> Void
-
+  
   init(activitySelection: FamilyActivitySelection? = nil,
        title: String = "",
        headerText: String = "",
@@ -56,21 +56,21 @@ struct RNTFamilyActivityPickerModalView: View {
     self.footerText = footerText
     self.onDismiss = onDismiss
   }
-
+  
   var cancelButton: some View {
     Button("Cancel") {
       presentationMode.wrappedValue.dismiss()
       onDismiss(nil)
     }
   }
-
+  
   var doneButton: some View {
     Button("Done") {
       presentationMode.wrappedValue.dismiss()
       onDismiss(activitySelection.encoded)
     }
   }
-
+  
   var body: some View {
     NavigationView {
       VStack {
@@ -94,30 +94,34 @@ public class RNTFamilyActivityPickerViewFactory: NSObject {
   }
 }
 
+
 @objc(ScreenTimeAPI)
 public class ScreenTimeAPI: NSObject {
+  
   public static let shared = ScreenTimeAPI()
-
+  
   lazy var store: ManagedSettingsStore = {
     let store = ManagedSettingsStore()
     store.application.denyAppRemoval = true
     return store
   }()
-
+  
   var activitySelection = FamilyActivitySelection() {
     willSet(value) {
       store.shield.applications = value.applicationTokens.isEmpty ? nil : value.applicationTokens
       store.shield.applicationCategories =
-        ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
+      ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
       store.shield.webDomains = value.webDomainTokens
       store.shield.webDomainCategories =
-        ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
+      ShieldSettings.ActivityCategoryPolicy.specific(value.categoryTokens, except: Set())
     }
   }
-
+  
   @objc
   static func requiresMainQueueSetup() -> Bool { return true }
-
+  
+  // managed settings
+  
   @objc
   public func getAuthorizationStatus(_ resolve: @escaping RCTPromiseResolveBlock,
                                      rejecter reject: @escaping RCTPromiseRejectBlock)
@@ -135,21 +139,21 @@ public class ScreenTimeAPI: NSObject {
       }
     }
   }
-
+  
   @objc
   public func getStore(_ resolve: RCTPromiseResolveBlock? = nil,
                        rejecter _: RCTPromiseRejectBlock? = nil)
   {
     resolve?(store.encoded)
   }
-
+  
   @objc
   public func getActivitySelection(_ resolve: RCTPromiseResolveBlock? = nil,
                                    rejecter _: RCTPromiseRejectBlock? = nil)
   {
     resolve?(activitySelection.encoded)
   }
-
+  
   @objc
   public func setActivitySelection(_ selection: NSDictionary,
                                    resolver resolve: RCTPromiseResolveBlock? = nil,
@@ -162,20 +166,20 @@ public class ScreenTimeAPI: NSObject {
     }
     reject?("0", "unable to parse selection", nil)
   }
-
+  
   @objc
   public func clearActivitySelection() {
     activitySelection = FamilyActivitySelection()
   }
-
+  
   @objc
   public func requestAuthorization(_ memberName: String,
                                    resolver resolve: RCTPromiseResolveBlock? = nil,
                                    rejecter reject: RCTPromiseRejectBlock? = nil)
   {
     guard let member: FamilyControlsMember =
-      memberName == "child" ? .child :
-      memberName == "individual" ? .individual : nil
+            memberName == "child" ? .child :
+              memberName == "individual" ? .individual : nil
     else {
       reject?("0", "invalid member type", nil)
       return
@@ -190,7 +194,7 @@ public class ScreenTimeAPI: NSObject {
       }
     }
   }
-
+  
   @objc
   public func revokeAuthorization(_ resolve: RCTPromiseResolveBlock? = nil,
                                   rejecter reject: RCTPromiseRejectBlock? = nil)
@@ -204,88 +208,27 @@ public class ScreenTimeAPI: NSObject {
       }
     }
   }
-
+  
   @objc
   public func denyAppRemoval() {
     store.application.denyAppRemoval = true
   }
-
+  
   @objc
   public func allowAppRemoval() {
     store.application.denyAppRemoval = false
   }
-
+  
   @objc
   public func denyAppInstallation() {
     store.application.denyAppInstallation = true
   }
-
+  
   @objc
   public func allowAppInstallation() {
     store.application.denyAppInstallation = false
   }
-
-  @objc
-  public func deleteAllWebHistory(_ identifier: String? = nil,
-                                  resolver resolve: RCTPromiseResolveBlock? = nil,
-                                  rejecter reject: RCTPromiseRejectBlock? = nil)
-  {
-    do {
-      if let identifier = identifier {
-        try STWebHistory(bundleIdentifier: identifier).deleteAllHistory()
-      } else {
-        STWebHistory().deleteAllHistory()
-      }
-      resolve?(nil)
-    } catch {
-      reject?("0", error.localizedDescription, error)
-    }
-  }
-
-  @objc
-  public func deleteWebHistoryDuring(_ interval: NSDictionary,
-                                     identifier: String? = nil,
-                                     resolver resolve: RCTPromiseResolveBlock? = nil,
-                                     rejecter reject: RCTPromiseRejectBlock? = nil)
-  {
-    guard let startDateStr = interval["startDate"] as? String,
-          let startDate = DateFormatter().date(from: startDateStr),
-          let durationStr = interval["duration"] as? String,
-          let duration = Double(durationStr)
-    else {
-      reject?("0", "invalid date intrerval provided", nil)
-      return
-    }
-    do {
-      if let identifier = identifier {
-        try STWebHistory(bundleIdentifier: identifier).deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
-      } else {
-        STWebHistory().deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
-      }
-      resolve?(nil)
-    } catch {
-      reject?("0", error.localizedDescription, error)
-    }
-  }
-
-  @objc
-  public func deleteWebHistoryForURL(_ url: String,
-                                     identifier: String? = nil,
-                                     resolver resolve: RCTPromiseResolveBlock? = nil,
-                                     rejecter reject: RCTPromiseRejectBlock? = nil)
-  {
-    do {
-      if let identifier = identifier {
-        try STWebHistory(bundleIdentifier: identifier).deleteHistory(for: URL(url, strategy: .url))
-      } else {
-        try STWebHistory().deleteHistory(for: URL(url, strategy: .url))
-      }
-      resolve?(nil)
-    } catch {
-      reject?("0", error.localizedDescription, error)
-    }
-  }
-
+  
   @objc
   public func initiateMonitoring(_ startTimestamp: String = "00:00",
                                  end endTimestamp: String = "23:59",
@@ -313,7 +256,37 @@ public class ScreenTimeAPI: NSObject {
       print("Could not start monitoring \(error)")
     }
   }
-
+  
+  @objc
+  public func getApplicationName(_ token: String,
+                                 resolver resolve: @escaping RCTPromiseResolveBlock,
+                                 rejecter reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      guard let image = ApplicationToken.asImage(token: token) else {
+        reject("0", "unable to parse token", nil)
+        return
+      }
+      detectNamedEntities(in: image) { boxes in
+        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+      }
+    }
+  }
+  
+  @objc
+  public func getCategoryName(_ token: String,
+                              resolver resolve: @escaping RCTPromiseResolveBlock,
+                              rejecter reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      guard let image = ActivityCategoryToken.asImage(token: token) else {
+        reject("0", "unable to parse token", nil)
+        return
+      }
+      detectNamedEntities(in: image) { boxes in
+        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+      }
+    }
+  }
+  
   @objc
   public func displayFamilyActivityPicker(_ options: NSDictionary,
                                           resolver resolve: RCTPromiseResolveBlock? = nil,
@@ -339,8 +312,72 @@ public class ScreenTimeAPI: NSObject {
       rootViewController.present(vc, animated: true)
     }
   }
+  
+  // web history
+  
+  @objc
+  public func deleteAllWebHistory(_ identifier: String? = nil,
+                                  resolver resolve: RCTPromiseResolveBlock? = nil,
+                                  rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteAllHistory()
+      } else {
+        STWebHistory().deleteAllHistory()
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
+  
+  @objc
+  public func deleteWebHistoryDuring(_ interval: NSDictionary,
+                                     identifier: String? = nil,
+                                     resolver resolve: RCTPromiseResolveBlock? = nil,
+                                     rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    guard let startDateStr = interval["startDate"] as? String,
+          let startDate = DateFormatter().date(from: startDateStr),
+          let durationStr = interval["duration"] as? String,
+          let duration = Double(durationStr)
+    else {
+      reject?("0", "invalid date intrerval provided", nil)
+      return
+    }
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
+      } else {
+        STWebHistory().deleteHistory(during: DateInterval(start: startDate, duration: duration / 1000))
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
+  
+  @objc
+  public func deleteWebHistoryForURL(_ url: String,
+                                     identifier: String? = nil,
+                                     resolver resolve: RCTPromiseResolveBlock? = nil,
+                                     rejecter reject: RCTPromiseRejectBlock? = nil)
+  {
+    do {
+      if let identifier = identifier {
+        try STWebHistory(bundleIdentifier: identifier).deleteHistory(for: URL(url, strategy: .url))
+      } else {
+        try STWebHistory().deleteHistory(for: URL(url, strategy: .url))
+      }
+      resolve?(nil)
+    } catch {
+      reject?("0", error.localizedDescription, error)
+    }
+  }
 }
 
 extension DeviceActivityName {
   static let daily = Self("daily")
 }
+
