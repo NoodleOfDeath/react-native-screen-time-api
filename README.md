@@ -22,6 +22,8 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
   - [Sample code](#sample-code)
   - [Getting Application/Category Names](#getting-applicationcategory-names)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 ## Installation
 
@@ -127,3 +129,41 @@ export const MyComponent = () => {
 ## Contributing
 
 [TODO: @ashish-rama]
+
+To contribute feel free to either make a PR or request to be added as a collaborator. Once your feature is added you may also add yourself to the Contributors list below.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/noodleofdeath">
+          <img src="https://avatars.githubusercontent.com/u/14790443?v=4" width="100px;" alt="Thom Morgan"/><br />
+          <sub>
+            <b>Thom Morgan</b>
+          </sub>
+        </a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/ducfilan">
+          <img src="https://avatars.githubusercontent.com/u/1677524?v=4" width="100px;" alt="Thom Morgan"/><br />
+          <sub>
+            <b>Duc Filan</b>
+          </sub>
+        </a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/ashish-rama">
+          <img src="https://avatars.githubusercontent.com/u/11560399?v=4" width="100px;" alt="Thom Morgan"/><br />
+          <sub>
+            <b>Ashish Ramachandran</b>
+          </sub>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
