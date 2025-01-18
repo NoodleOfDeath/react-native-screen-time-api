@@ -119,7 +119,11 @@ export const MyComponent = () => {
   }, []);
 
   return (
-    <Button onPress={ getName() }>Get Names</Button>
+    <Button onPress={ getNames() }>Get Names</Button>
   );
 }
 ```
+
+## Contributing
+
+[TODO: @ashish-rama]
