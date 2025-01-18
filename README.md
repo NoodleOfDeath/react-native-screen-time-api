@@ -84,22 +84,24 @@ React.useEffect(() => {
 
 ### Getting Application/Category Names
 
+After the use has given authorization you can then use the tokens they select to retrieve the names of each application or category selected
+
 ```typescript
-React.useEffect(() => {
-  (async () => {
-    try {
+const getNames = React.useCallback(async () => {
+  try {
 
-      const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
-      const applicationName = await ScreenTime.getApplicationName(applicationToken);
-      console.log('Application name:', applicationName);
+    const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+    const applicationName = await ScreenTime.getApplicationName(applicationToken);
+    console.log('Application name:', applicationName);
 
-      const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
-      const categoryName = await ScreenTime.getCategoryName(categoryToken);
-      console.log('Category name:', categoryName);
-      
-    } catch (error) {
-      console.error(error);
-    }
-  })();
+    const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+    const categoryName = await ScreenTime.getCategoryName(categoryToken);
+    console.log('Category name:', categoryName);
+    
+  } catch (error) {
+    console.error(error);
+  }
 }, []);
+...
+<Button onPress={ getName() }>Get Names</Button<
 ```
