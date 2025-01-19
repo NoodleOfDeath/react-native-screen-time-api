@@ -230,10 +230,10 @@ public class ScreenTimeAPI: NSObject {
   }
   
   @objc
-  public func initiateMonitoring(_ startTimestamp: String = "00:00",
-                                 end endTimestamp: String = "23:59",
-                                 resolver resolve: RCTPromiseResolveBlock? = nil,
-                                 rejecter reject: RCTPromiseRejectBlock? = nil)
+  public func initializeMonitoring(_ startTimestamp: String = "00:00",
+                                   end endTimestamp: String = "23:59",
+                                   resolver resolve: RCTPromiseResolveBlock? = nil,
+                                   rejecter reject: RCTPromiseRejectBlock? = nil)
   {
     do {
       guard let start = DateFormatter().date(from: startTimestamp),

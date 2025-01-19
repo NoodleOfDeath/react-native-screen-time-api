@@ -39,10 +39,16 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(getApplicationName (id) token
+RCT_EXTERN_METHOD(getApplicationName: (NSString *) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(getCategoryName: (id) token
+RCT_EXTERN_METHOD(getApplicationName: (NSDictionary *) token
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getCategoryName: (NSString *) token
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getCategoryName: (NSDictionary *) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 
@@ -50,11 +56,11 @@ RCT_EXTERN_METHOD(getCategoryName: (id) token
 RCT_EXTERN_METHOD(deleteAllWebHistory: (NSString *) identifier
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(deleteAllWebHistoryDuring: (NSDictionary *) timeInterval
+RCT_EXTERN_METHOD(deleteWebHistoryDuring: (NSDictionary *) timeInterval
                   identifier: (NSString *) identifier
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(deleteAllWebHistoryFor: (NSString *) url
+RCT_EXTERN_METHOD(deleteWebHistoryForURL: (NSString *) url
                   identifier: (NSString *) identifier
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)

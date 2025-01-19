@@ -36,7 +36,7 @@ extension ApplicationToken {
           let token = try? JSONDecoder().decode(ApplicationToken.self, from: data) else {
       return nil
     }
-    return Label(token).asUIImage(size: size)
+    return Label(token).labelStyle(.titleOnly).asUIImage(size: size)
   }
   
 }
@@ -49,7 +49,7 @@ extension ActivityCategoryToken {
           let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: data) else {
       return nil
     }
-    return Label(token).asUIImage(size: size)
+    return Label(token).labelStyle(.titleOnly).asUIImage(size: size)
   }
   
 }

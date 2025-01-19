@@ -18,9 +18,9 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
 ## Table of Contents <!-- omit in toc -->
 
 - [Installation](#installation)
-- [Usage](#usage)
+- [Set up for iOS](#set-up-for-ios)
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
-  - [Sample code](#sample-code)
+- [Sample code](#sample-code)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 
@@ -36,9 +36,15 @@ or
 yarn add react-native-screen-time-api
 ```
 
-Then run `npx pod-install`.
+## Set up for iOS
 
-## Usage
+Ensure that your deployment target is set to iOS 16.0 or higher in your Xcode project and ios/Podfile
+
+```podfile
+platform :ios, '16.0'
+```
+
+Always run `npx pod-install` after installing or updating this package.
 
 ### Add FamilyControls capability to your app
 See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
@@ -58,18 +64,19 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 </plist>
 ```
 
-### Sample code
+## Sample code
 ```typescript
 import React from 'react';
 import {
   StyleSheet,
+  Text,
   TouchableHighlight,
   View,
 } from 'react-native';
 
 import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
-export const MyComponent = () => {
+const MyApp = () => {
 
   const [activitySelection, setActivitySelection] = React.useState<FamilyActivitySelection>();
 
@@ -99,15 +106,17 @@ export const MyComponent = () => {
       if (!activitySelection) {
         throw new Error('no activity selection');
       }
-  
+
       const applicationToken = activitySelection.applicationTokens[0];
+      console.log(applicationToken);
       const applicationName = await ScreenTime.getApplicationName(applicationToken);
       console.log('Application name:', applicationName);
-  
+
       const categoryToken = activitySelection.categoryTokens[0];
+      console.log(categoryToken);
       const categoryName = await ScreenTime.getCategoryName(categoryToken);
       console.log('Category name:', categoryName);
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -116,11 +125,11 @@ export const MyComponent = () => {
   return (
     <View style={ styles.view }>
       <TouchableHighlight onPress={ () => selectActivities() }>
-        Select Activities
+        <Text>Select Activities</Text>
       </TouchableHighlight>
       {activitySelection && (
         <TouchableHighlight onPress={ () => getNames() }>
-          Get Names
+          <Text>Get Names</Text>
         </TouchableHighlight>
       )}
     </View>
@@ -132,15 +141,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     flexGrow: 1,
+    backgroundColor: 'white',
     gap: 6,
     justifyContent: 'center',
   },
 });
+
+export default MyApp;
 ```
 
 ## Contributing
 
 To contribute feel free to either make a PR or request to be added as a collaborator. Once your feature is added you may also add yourself to the Contributors list below.
+
+To begin development, clone the repository and open `/ScreenTimeExample/ios/ScreenTimeExample.xcworkspace` directory. This will open the example project in Xcode. You can then run the project in the simulator or on a physical device.
+
+You can first modify the code under `Pods/Development Pods/ReactNativeScreenTimeAPI` while debugging or tryng to add new features. Once you are satisfied with your changes, you will need to copy your files and changes to the `ReactNativeScreenTimeAPI` project under the `Pods` project, then make a RP.
 
 ## Contributors
 
