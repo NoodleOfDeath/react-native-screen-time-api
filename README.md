@@ -19,7 +19,9 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
 
 - [Installation](#installation)
 - [Set up for iOS](#set-up-for-ios)
+  - [Configure Podfile](#configure-podfile)
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
+  - [Request Family Controls capabilities](#request-family-controls-capabilities)
 - [Sample code](#sample-code)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -38,6 +40,8 @@ yarn add react-native-screen-time-api
 
 ## Set up for iOS
 
+### Configure Podfile
+
 Ensure that your deployment target is set to iOS 16.0 or higher in your Xcode project and ios/Podfile
 
 ```podfile
@@ -47,9 +51,8 @@ platform :ios, '16.0'
 Always run `npx pod-install` after installing or updating this package.
 
 ### Add FamilyControls capability to your app
-See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
 
-In addition to adding the Family Controls entitlement, for distribution, you will also need to [request Family Controls capabilities](https://developer.apple.com/contact/request/family-controls-distribution)
+See https://developer.apple.com/documentation/Xcode/adding-capabilities-to-your-app
 
 
 Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
@@ -63,6 +66,10 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
   </dict>
 </plist>
 ```
+
+### Request Family Controls capabilities
+
+In addition to adding the Family Controls entitlement, for distribution, you will also need to [request Family Controls capabilities](https://developer.apple.com/contact/request/family-controls-distribution)
 
 ## Sample code
 ```typescript
