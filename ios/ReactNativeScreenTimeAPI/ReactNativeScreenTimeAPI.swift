@@ -258,7 +258,7 @@ public class ScreenTimeAPI: NSObject {
   }
   
   @objc
-  public func getApplicationName(_ token: NSObject,
+  public func getApplicationName(_ token: Any,
                                  resolver resolve: @escaping RCTPromiseResolveBlock,
                                  rejecter reject: @escaping RCTPromiseRejectBlock) {
     DispatchQueue.main.async {
@@ -273,7 +273,7 @@ public class ScreenTimeAPI: NSObject {
   }
   
   @objc
-  public func getCategoryName(_ token: NSObject,
+  public func getCategoryName(_ token: Any,
                               resolver resolve: @escaping RCTPromiseResolveBlock,
                               rejecter reject: @escaping RCTPromiseRejectBlock) {
     DispatchQueue.main.async {

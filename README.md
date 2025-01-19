@@ -111,6 +111,10 @@ export const MyComponent = () => {
 
   const getNames = React.useCallback(async () => {
     try {
+
+      if (!activitySelection) {
+        throw new Error('no activity selection');
+      }
   
       const applicationToken = activitySelection?.applicationTokens[0];
       const applicationName = await ScreenTime.getApplicationName(applicationToken);

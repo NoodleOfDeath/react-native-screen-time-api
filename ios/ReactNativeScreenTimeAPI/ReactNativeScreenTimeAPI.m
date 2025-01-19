@@ -39,10 +39,10 @@ RCT_EXTERN_METHOD(initializeMonitoring: (NSString *) start
                   end: (NSString *) end
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(getApplicationName (NSObject *) token
+RCT_EXTERN_METHOD(getApplicationName (id) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
-RCT_EXTERN_METHOD(getCategoryName: (NSObject *) token
+RCT_EXTERN_METHOD(getCategoryName: (id) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 
