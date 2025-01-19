@@ -62,6 +62,7 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ### Sample code
 ```typescript
 import React from 'react';
+import { Button, View } from 'react-native';
 
 import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
@@ -84,30 +85,11 @@ export const MyComponent = () => {
           setActivitySelection(selection);
           await ScreenTime.setActivitySelection(selection); // sets the shields
         }
-      })
+      });
     } catch (error) {
       console.error(error);
     }
   }, []);
-
-  return null;
-}
-```
-
-### Getting Application/Category Names
-
-After the use has given authorization you can then use the tokens they select to retrieve the names of each application or category selected
-
-```typescript
-import React from 'react';
-
-import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
-
-export const MyComponent = () => {
-
-  const [activitySelection, setActivitySelection] = React.useState<FamilyActivitySelection>();
-
-  React.useEffect(() => 'request auth', []);
 
   const getNames = React.useCallback(async () => {
     try {
@@ -116,28 +98,28 @@ export const MyComponent = () => {
         throw new Error('no activity selection');
       }
   
-      const applicationToken = activitySelection?.applicationTokens[0];
+      const applicationToken = activitySelection.applicationTokens[0];
       const applicationName = await ScreenTime.getApplicationName(applicationToken);
       console.log('Application name:', applicationName);
   
-      const categoryToken = activitySelection?.categoryTokens[0];
+      const categoryToken = activitySelection.categoryTokens[0];
       const categoryName = await ScreenTime.getCategoryName(categoryToken);
       console.log('Category name:', categoryName);
       
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [activitySelection]);
 
   return (
-    <Button onPress={ getNames() }>Get Names</Button>
+    <View>
+      <Button onPress={ () => getNames() }>Get Names</Button>
+    </View>
   );
 }
 ```
 
 ## Contributing
-
-[TODO: @ashish-rama]
 
 To contribute feel free to either make a PR or request to be added as a collaborator. Once your feature is added you may also add yourself to the Contributors list below.
 
