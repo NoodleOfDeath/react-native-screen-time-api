@@ -30,8 +30,8 @@ extension View {
 
 extension ApplicationToken {
   
-  public static func asImage(token: String, size: CGSize? = nil) -> UIImage? {
-    let tokenDict = [ "data": token ]
+  public static func asImage(token: NSObject, size: CGSize? = nil) -> UIImage? {
+    let tokenDict = token as? NSDictionary ?? [ "data": token as? String ?? "" ]
     guard let data = try? JSONSerialization.data(withJSONObject: tokenDict, options: []),
           let token = try? JSONDecoder().decode(ApplicationToken.self, from: data) else {
       return nil
@@ -43,8 +43,8 @@ extension ApplicationToken {
 
 extension ActivityCategoryToken {
   
-  public static func asImage(token: String, size: CGSize? = nil) -> UIImage? {
-    let tokenDict = [ "data": token ]
+  public static func asImage(token: NSObject, size: CGSize? = nil) -> UIImage? {
+    let tokenDict = token as? NSDictionary ?? [ "data": token as? String ?? "" ]
     guard let data = try? JSONSerialization.data(withJSONObject: tokenDict, options: []),
           let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: data) else {
       return nil

@@ -63,9 +63,11 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ```typescript
 import React from 'react';
 
-import { ScreenTime } from 'react-native-screen-time-api';
+import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
 export const MyComponent = () => {
+
+  const [activitySelection, setActivitySelection] = React.useState<FamilyActivitySelection>();
 
   React.useEffect(() => {
     try {
@@ -79,6 +81,7 @@ export const MyComponent = () => {
         console.log('Family activity selection:', selection);
         // selection will be `null` if user presses cancel
         if (selection) {
+          setActivitySelection(selection);
           await ScreenTime.setActivitySelection(selection); // sets the shields
         }
       })
@@ -98,20 +101,22 @@ After the use has given authorization you can then use the tokens they select to
 ```typescript
 import React from 'react';
 
-import { ScreenTime } from 'react-native-screen-time-api';
+import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
 export const MyComponent = () => {
+
+  const [activitySelection, setActivitySelection] = React.useState<FamilyActivitySelection>();
 
   React.useEffect(() => 'request auth', []);
 
   const getNames = React.useCallback(async () => {
     try {
   
-      const applicationToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const applicationToken = activitySelection?.applicationTokens[0];
       const applicationName = await ScreenTime.getApplicationName(applicationToken);
       console.log('Application name:', applicationName);
   
-      const categoryToken = 'AAAAAAAAAAAAAAAAo3rxmsRogpNGnEP......UBr8SOGINQYN3mAXMOBCZzZ08uk92uvCcnVmkDaBo4Fps=';
+      const categoryToken = activitySelection?.categoryTokens[0];
       const categoryName = await ScreenTime.getCategoryName(categoryToken);
       console.log('Category name:', categoryName);
       

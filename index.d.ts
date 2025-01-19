@@ -300,13 +300,13 @@ export type IScreenTimeAPI = {
    * @platform ios
    * @returns {Promise<string>}
    */
-  getApplicationName: (token: string) => Promise<string>
+  getApplicationName: (token: string | { data: string }) => Promise<string>
   
   /**
    * @platform ios
    * @returns {Promise<string>}
    */
-  getCategoryName: (token: string) => Promise<string>
+  getCategoryName: (token: string | { data: string }) => Promise<string>
 
   /**
    * @platform ios
