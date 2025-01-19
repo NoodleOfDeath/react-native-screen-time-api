@@ -45,10 +45,16 @@ RCT_EXTERN_METHOD(getApplicationName: (NSString *) token
 RCT_EXTERN_METHOD(getApplicationName: (NSDictionary *) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getApplicationNames: (NSArray *) tokens
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(getCategoryName: (NSString *) token
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(getCategoryName: (NSDictionary *) token
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getCategoryNames: (NSArray *) tokens
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 

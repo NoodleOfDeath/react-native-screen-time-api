@@ -18,6 +18,14 @@ export type Token = {
 /**
  * @platform ios
  */
+export type TokenNamePair = {
+  token: Token;
+  name: string;
+}
+
+/**
+ * @platform ios
+ */
 export type FamilyActivitySelection = {
   applicationTokens: Token[];
   categoryTokens: Token[];
@@ -304,9 +312,21 @@ export type IScreenTimeAPI = {
   
   /**
    * @platform ios
+   * @returns {Promise<TokenNamePair>[]>}
+   */
+  getApplicationNames: (token: (string | Token)[]) => Promise<TokenNamePair[]>
+  
+  /**
+   * @platform ios
    * @returns {Promise<string>}
    */
   getCategoryName: (token: string | Token) => Promise<string>
+  
+  /**
+   * @platform ios
+   * @returns {Promise<TokenNamePair>[]>}
+   */
+  getCategoryNames: (token: (string | Token)[]) => Promise<TokenNamePair[]>
 
   /**
    * @platform ios

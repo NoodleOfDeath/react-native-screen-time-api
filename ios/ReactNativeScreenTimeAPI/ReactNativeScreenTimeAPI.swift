@@ -13,6 +13,8 @@ import ScreenTime
 
 import SwiftUI
 
+let IMAGE_GEN_SLEEP_INTERVAL_MICROSECONDS: UInt32 = 1000000/5
+
 struct RNTFamilyActivityPickerView: View {
   @State var model = ScreenTimeAPI.shared
   
@@ -261,30 +263,80 @@ public class ScreenTimeAPI: NSObject {
   public func getApplicationName(_ token: Any,
                                  resolver resolve: @escaping RCTPromiseResolveBlock,
                                  rejecter reject: @escaping RCTPromiseRejectBlock) {
-    DispatchQueue.main.async {
-      guard let image = ApplicationToken.asImage(token: token) else {
-        reject("0", "unable to parse token", nil)
-        return
-      }
-      detectNamedEntities(in: image) { boxes in
-        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+    guard let image = ApplicationToken.toImage(token: token) else {
+      return reject("0", "unable to parse token", nil)
+    }
+    image.detectText { resolve($0) }
+  }
+  
+  @objc
+  public func getApplicationNames(_ tokens: [Any],
+                                  resolver resolve: @escaping RCTPromiseResolveBlock,
+                                  rejecter reject: @escaping RCTPromiseRejectBlock) {
+    var names: [[String: Any]] = []
+    var iter = tokens.makeIterator()
+    func extractTextFromLabel(_ token: Any?, _ retries: Int = 0) {
+      if let token = token {
+        ApplicationToken.toImage(token: token)?.detectText {
+          usleep(IMAGE_GEN_SLEEP_INTERVAL_MICROSECONDS)
+          if $0 == "" {
+            if retries < 3 {
+              return extractTextFromLabel(token)
+            } else {
+              reject("0", "unable to parse token", nil)
+            }
+          }
+          names.append([
+            "token": token as? NSDictionary ?? ["data": token as? String ?? ""],
+            "name": $0,
+          ])
+          extractTextFromLabel(iter.next())
+        }
+      } else {
+        resolve(names)
       }
     }
+    extractTextFromLabel(iter.next())
   }
   
   @objc
   public func getCategoryName(_ token: Any,
                               resolver resolve: @escaping RCTPromiseResolveBlock,
                               rejecter reject: @escaping RCTPromiseRejectBlock) {
-    DispatchQueue.main.async {
-      guard let image = ActivityCategoryToken.asImage(token: token) else {
-        reject("0", "unable to parse token", nil)
-        return
-      }
-      detectNamedEntities(in: image) { boxes in
-        resolve(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+    guard let image = ActivityCategoryToken.toImage(token: token) else {
+      return reject("0", "unable to parse token", nil)
+    }
+    image.detectText { resolve($0) }
+  }
+  
+  @objc
+  public func getCategoryNames(_ tokens: [Any],
+                               resolver resolve: @escaping RCTPromiseResolveBlock,
+                               rejecter reject: @escaping RCTPromiseRejectBlock) {
+    var names: [[String: Any]] = []
+    var iter = tokens.makeIterator()
+    func extractTextFromLabel(_ token: Any?, _ retries: Int = 0) {
+      if let token = token {
+        ActivityCategoryToken.toImage(token: token)?.detectText {
+          usleep(IMAGE_GEN_SLEEP_INTERVAL_MICROSECONDS)
+          if $0 == "" {
+            if retries < 3 {
+              return extractTextFromLabel(token)
+            } else {
+              reject("0", "unable to parse token", nil)
+            }
+          }
+          names.append([
+            "token": token as? NSDictionary ?? ["data": token as? String ?? ""],
+            "name": $0,
+          ])
+          extractTextFromLabel(iter.next())
+        }
+      } else {
+        resolve(names)
       }
     }
+    extractTextFromLabel(iter.next())
   }
   
   @objc

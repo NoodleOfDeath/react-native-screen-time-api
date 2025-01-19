@@ -37,7 +37,7 @@ struct NLBoundingBox: Encodable {
   }
 }
 
-extension CGRect: Hashable {
+extension CGRect: @retroactive Hashable {
   public func hash(into hasher: inout Hasher) {
     "\(self.origin.x),\(self.origin.y),\(self.width),\(self.height)".hash(into: &hasher)
   }
@@ -78,6 +78,8 @@ func detectNamedEntities(in image: UIImage, completion: @escaping ([NLBoundingBo
     
     completion(boundingBoxes)
   }
+  
+  textRecognitionRequest.recognitionLevel = .fast
   
   // Perform the text recognition request
   do {

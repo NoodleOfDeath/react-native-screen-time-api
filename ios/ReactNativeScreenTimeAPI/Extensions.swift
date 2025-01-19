@@ -12,44 +12,61 @@ import SwiftUI
 import UIKit
 
 extension View {
-  func asUIImage(size: CGSize? = nil) -> UIImage {
-    let controller = UIHostingController(rootView: self)
-    let view = controller.view
-    
-    // Set the desired size
-    view?.bounds = CGRect(origin: .zero, size: size ?? UIScreen.main.bounds.size)
-    view?.backgroundColor = .clear
-    
-    // Render the view to an image
-    let renderer = UIGraphicsImageRenderer(size: size ?? UIScreen.main.bounds.size)
-    return renderer.image { context in
-      view?.drawHierarchy(in: view!.bounds, afterScreenUpdates: true)
+  
+  func toImage(size: CGSize? = nil) -> UIImage? {
+    DispatchQueue.main.sync {
+      let controller = UIHostingController(rootView: self)
+      guard let view = controller.view else {
+        return nil
+      }
+      
+      view.bounds = CGRect(origin: .zero, size: size ?? UIScreen.main.bounds.size)
+      
+      let imageRenderer = UIGraphicsImageRenderer(bounds: view.bounds)
+      if let format = imageRenderer.format as? UIGraphicsImageRendererFormat {
+        format.opaque = true
+      }
+      let image = imageRenderer.image { context in
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+      }
+      return image
     }
   }
+  
+}
+
+extension UIImage {
+  
+  func detectText(completion: @escaping ((String) -> Void)) {
+    detectNamedEntities(in: self) { boxes in
+      completion(boxes.map { $0.text }.reduce("") { prev, box in prev + " " + box}.trimmingCharacters(in: .whitespaces))
+    }
+  }
+  
 }
 
 extension ApplicationToken {
   
-  public static func asImage(token: Any, size: CGSize? = nil) -> UIImage? {
+  public static func toImage(token: Any, size: CGSize? = nil) -> UIImage? {
     let tokenDict = token as? NSDictionary ?? [ "data": token as? String ?? "" ]
     guard let data = try? JSONSerialization.data(withJSONObject: tokenDict, options: []),
           let token = try? JSONDecoder().decode(ApplicationToken.self, from: data) else {
       return nil
     }
-    return Label(token).labelStyle(.titleOnly).asUIImage(size: size)
+    return Label(token).labelStyle(.titleOnly).toImage(size: size)
   }
   
 }
 
 extension ActivityCategoryToken {
   
-  public static func asImage(token: Any, size: CGSize? = nil) -> UIImage? {
+  public static func toImage(token: Any, size: CGSize? = nil) -> UIImage? {
     let tokenDict = token as? NSDictionary ?? [ "data": token as? String ?? "" ]
     guard let data = try? JSONSerialization.data(withJSONObject: tokenDict, options: []),
           let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: data) else {
       return nil
     }
-    return Label(token).labelStyle(.titleOnly).asUIImage(size: size)
+    return Label(token).labelStyle(.titleOnly).toImage(size: size)
   }
   
 }

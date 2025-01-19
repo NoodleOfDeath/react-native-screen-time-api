@@ -39,15 +39,11 @@ const MyApp = () => {
         throw new Error('no activity selection');
       }
 
-      const applicationToken = activitySelection.applicationTokens[0];
-      console.log(applicationToken);
-      const applicationName = await ScreenTime.getApplicationName(applicationToken);
-      console.log('Application name:', applicationName);
+      const applicationName = await ScreenTime.getApplicationNames(activitySelection.applicationTokens);
+      console.log('Applications:', applicationName);
 
-      const categoryToken = activitySelection.categoryTokens[0];
-      console.log(categoryToken);
-      const categoryName = await ScreenTime.getCategoryName(categoryToken);
-      console.log('Category name:', categoryName);
+      const categoryName = await ScreenTime.getCategoryNames(activitySelection.categoryTokens);
+      console.log('Categories:', categoryName);
 
     } catch (error) {
       console.error(error);
