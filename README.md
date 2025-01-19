@@ -163,7 +163,7 @@ To contribute feel free to either make a PR or request to be added as a collabor
 
 To begin development, clone the repository and open [`/ScreenTimeExample/ios/ScreenTimeExample.xcworkspace`](https://github.com/NoodleOfDeath/react-native-screen-time-api/tree/main/ScreenTimeExample/ios/ScreenTimeExample.xcworkspace) directory. This will open the example project in Xcode. You can then run the project in the simulator or on a physical device. You may need to run `npx pod-install` inside the `ScreenTimeExample` directory to install the necessary pods.
 
-You can first modify the code under `Pods/Development Pods/ReactNativeScreenTimeAPI` while debugging or tryng to add new features. Once you are satisfied with your changes, you will need to copy your files and changes to the [`ReactNativeScreenTimeAPI` project](https://github.com/NoodleOfDeath/react-native-screen-time-api/tree/main/ios/ReactNativeScreenTimeAPI.xcodeproj) under the `Pods` project, then make a RP.
+You can first modify the code under `Pods/Development Pods/ReactNativeScreenTimeAPI` while debugging or tryng to add new features. Once you are satisfied with your changes, you will need to copy your files and changes to the [`ReactNativeScreenTimeAPI` project](https://github.com/NoodleOfDeath/react-native-screen-time-api/tree/main/ios/ReactNativeScreenTimeAPI.xcodeproj) under the `Pods` project, then make a pull request.
 
 ## Contributors
 
