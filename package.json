@@ -1,6 +1,6 @@
 {
   "name": "react-native-screen-time-api",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "React Native for accessing the iOS Screen Time and Android Digital Wellbeing (coming soon) APIs.",
   "main": "index.js",
   "repository": {
