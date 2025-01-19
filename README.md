@@ -21,7 +21,6 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
 - [Usage](#usage)
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
   - [Sample code](#sample-code)
-  - [Getting Application/Category Names](#getting-applicationcategory-names)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 
@@ -62,7 +61,11 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ### Sample code
 ```typescript
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 
 import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
@@ -78,7 +81,7 @@ export const MyComponent = () => {
       if (status !== 'approved') {
         throw new Error('user denied screen time access');
       }
-      const selection = await ScreenTime.displayFamilyActivityPicker();
+      const selection = await ScreenTime.displayFamilyActivityPicker({});
       console.log('Family activity selection:', selection);
       // selection will be `null` if user presses cancel
       if (selection) {
@@ -112,25 +115,25 @@ export const MyComponent = () => {
 
   return (
     <View style={ styles.view }>
-      <Button onPress={ () => selectActivities() }>
+      <TouchableHighlight onPress={ () => selectActivities() }>
         Select Activities
-      </Button>
+      </TouchableHighlight>
       {activitySelection && (
-        <Button onPress={ () => getNames() }>
+        <TouchableHighlight onPress={ () => getNames() }>
           Get Names
-        </Button>
+        </TouchableHighlight>
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   view: {
+    alignItems: 'center',
+    flexDirection: 'column',
     flexGrow: 1,
-    flexDirection: 'column'c
     gap: 6,
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 ```
