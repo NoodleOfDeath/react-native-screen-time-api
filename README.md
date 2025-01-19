@@ -62,7 +62,7 @@ Open `ios/[your-app]/[your-app].entitlements` file, add this definition:
 ### Sample code
 ```typescript
 import React from 'react';
-import { Button, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import { FamilyActivitySelection, ScreenTime } from 'react-native-screen-time-api';
 
@@ -70,22 +70,21 @@ export const MyComponent = () => {
 
   const [activitySelection, setActivitySelection] = React.useState<FamilyActivitySelection>();
 
-  React.useEffect(() => {
+  const selectActivities = React.useCallback(async () => {
     try {
-      ScreenTime.requestAuthorization('individual').then(async () => {
-        const status = await ScreenTime.getAuthorizationStatus();
-        console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
-        if (status !== 'approved') {
-          throw new Error('user denied screen time access');
-        }
-        const selection = await ScreenTime.displayFamilyActivityPicker();
-        console.log('Family activity selection:', selection);
-        // selection will be `null` if user presses cancel
-        if (selection) {
-          setActivitySelection(selection);
-          await ScreenTime.setActivitySelection(selection); // sets the shields
-        }
-      });
+      await ScreenTime.requestAuthorization('individual');
+      const status = await ScreenTime.getAuthorizationStatus();
+      console.log('Authorization status:', status); // 'approved', 'denied', or 'notDetermined'
+      if (status !== 'approved') {
+        throw new Error('user denied screen time access');
+      }
+      const selection = await ScreenTime.displayFamilyActivityPicker();
+      console.log('Family activity selection:', selection);
+      // selection will be `null` if user presses cancel
+      if (selection) {
+        setActivitySelection(selection);
+        await ScreenTime.setActivitySelection(selection); // sets the shields
+      }
     } catch (error) {
       console.error(error);
     }
@@ -112,11 +111,28 @@ export const MyComponent = () => {
   }, [activitySelection]);
 
   return (
-    <View>
-      <Button onPress={ () => getNames() }>Get Names</Button>
+    <View style={ styles.view }>
+      <Button onPress={ () => selectActivities() }>
+        Select Activities
+      </Button>
+      {activitySelection && (
+        <Button onPress={ () => getNames() }>
+          Get Names
+        </Button>
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  view: {
+    flexGrow: 1,
+    flexDirection: 'column'c
+    gap: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 ```
 
 ## Contributing
