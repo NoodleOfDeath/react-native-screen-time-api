@@ -312,6 +312,7 @@ export type IScreenTimeAPI = {
   
   /**
    * @platform ios
+   * @beta currently crashing a lot
    * @returns {Promise<TokenNamePair>[]>}
    */
   getApplicationNames: (token: (string | Token)[]) => Promise<TokenNamePair[]>
@@ -324,6 +325,7 @@ export type IScreenTimeAPI = {
   
   /**
    * @platform ios
+   * @beta currently crashing a lot
    * @returns {Promise<TokenNamePair>[]>}
    */
   getCategoryNames: (token: (string | Token)[]) => Promise<TokenNamePair[]>
