@@ -117,7 +117,7 @@ const MyApp = () => {
       const applicationName = await ScreenTime.getApplicationName(activitySelection.applicationTokens[0]);
       console.log('First Application:', applicationName);
 
-      const categoryName = await ScreenTime.getCategoryNames(activitySelection.categoryTokens[0]);
+      const categoryName = await ScreenTime.getCategoryName(activitySelection.categoryTokens[0]);
       console.log('First Category:', categoryName);
 
     } catch (error) {
