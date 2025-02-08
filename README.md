@@ -15,7 +15,7 @@
 
 Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). This is far from complete and needs more work. Please don't hesitate to request specific screen time features
 
-**NOTE: The token to app name or category name API is a hackish solution because Apple intentionally obfuscates this information from developers. The approach we use is OCR, and the app will may be rejected by Apple if you use that particular feature of this API**
+**NOTE: The app/category-token-to-app/category-name API portion of this library is a hackish implementation because Apple intentionally obfuscates this information from developers. Your app may be rejected by Apple if you use that particular feature of this API as it would circumvent their obfuscation. The approach also uses OCR and is quite buggy,  so just use it for experimentation and learning purposes.**
 
 ## Table of Contents <!-- omit in toc -->
 
