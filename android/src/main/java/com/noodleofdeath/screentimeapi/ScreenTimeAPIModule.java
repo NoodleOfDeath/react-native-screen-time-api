@@ -68,20 +68,32 @@ public class ScreenTimeAPIModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void denyAppRemoval(Promise promise) {
+    public void denyAppRemoval(boolean deny, Promise promise) {
         promise.resolve("success");
     }
 
+    /**
+     * @deprecated Apple's {@code ApplicationSettings} has no {@code allowAppRemoval}
+     *     property; use {@link #denyAppRemoval(boolean, Promise) denyAppRemoval(false)}
+     *     instead. Kept for backwards compatibility.
+     */
+    @Deprecated
     @ReactMethod
     public void allowAppRemoval(Promise promise) {
         promise.resolve("success");
     }
 
     @ReactMethod
-    public void denyAppInstallation(Promise promise) {
+    public void denyAppInstallation(boolean deny, Promise promise) {
         promise.resolve("success");
     }
 
+    /**
+     * @deprecated Apple's {@code ApplicationSettings} has no {@code allowAppInstallation}
+     *     property; use {@link #denyAppInstallation(boolean, Promise) denyAppInstallation(false)}
+     *     instead. Kept for backwards compatibility.
+     */
+    @Deprecated
     @ReactMethod
     public void allowAppInstallation(Promise promise) {
         promise.resolve("success");

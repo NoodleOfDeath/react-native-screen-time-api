@@ -277,13 +277,25 @@ export type IScreenTimeAPI = {
   clearBlockedApplications: () => Promise<void>;
 
   /**
+   * Sets whether app installation is denied.
+   *
+   * Mirrors Apple's
+   * [`ApplicationSettings.denyAppInstallation`](https://developer.apple.com/documentation/managedsettings/applicationsettings/denyappinstallation).
+   * On iOS this sets `ManagedSettingsStore.application.denyAppInstallation`; the
+   * current value is readable via {@link getStore} (`application.denyAppInstallation`).
    * @platform ios
    * @platform android
+   * @param {boolean} deny whether app installation is denied
    * @returns {Promise<void>}
    */
-  denyAppInstallation: () => Promise<void>;
+  denyAppInstallation: (deny: boolean) => Promise<void>;
 
   /**
+   * Allows app installation.
+   *
+   * @deprecated Apple's `ApplicationSettings` has no `allowAppInstallation`
+   * property; use {@link denyAppInstallation}`(false)` instead. Kept for
+   * backwards compatibility.
    * @platform ios
    * @platform android
    * @returns {Promise<void>}
@@ -291,13 +303,25 @@ export type IScreenTimeAPI = {
   allowAppInstallation: () => Promise<void>;
 
   /**
+   * Sets whether app removal is denied.
+   *
+   * Mirrors Apple's
+   * [`ApplicationSettings.denyAppRemoval`](https://developer.apple.com/documentation/managedsettings/applicationsettings/denyappremoval).
+   * On iOS this sets `ManagedSettingsStore.application.denyAppRemoval`; the
+   * current value is readable via {@link getStore} (`application.denyAppRemoval`).
    * @platform ios
    * @platform android
+   * @param {boolean} deny whether app removal is denied
    * @returns {Promise<void>}
    */
-  denyAppRemoval: () => Promise<void>;
+  denyAppRemoval: (deny: boolean) => Promise<void>;
 
   /**
+   * Allows app removal.
+   *
+   * @deprecated Apple's `ApplicationSettings` has no `allowAppRemoval`
+   * property; use {@link denyAppRemoval}`(false)` instead. Kept for
+   * backwards compatibility.
    * @platform ios
    * @platform android
    * @returns {Promise<void>}
