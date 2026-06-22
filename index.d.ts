@@ -305,25 +305,31 @@ export type IScreenTimeAPI = {
   allowAppRemoval: () => Promise<void>;
 
   /**
-   * Denies in-app purchases.
+   * Sets whether in-app purchases are denied.
    *
-   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases = true`;
-   * the current value is readable via {@link getStore} (`appStore.denyInAppPurchases`).
-   * On Android the flag is persisted by this library (Android exposes no
-   * system-level in-app purchase restriction for a regular app).
+   * Mirrors Apple's
+   * [`AppStoreSettings.denyInAppPurchases`](https://developer.apple.com/documentation/managedsettings/appstoresettings/denyinapppurchases).
+   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases`; the
+   * current value is readable via {@link getStore} (`appStore.denyInAppPurchases`).
+   *
+   * Not supported on Android — Android exposes no system-level API to block
+   * in-app purchases for a regular app, so this call has no effect there.
    * @platform ios
-   * @platform android
+   * @param {boolean} deny whether in-app purchases are denied
    * @returns {Promise<void>}
    */
-  denyInAppPurchases: () => Promise<void>;
+  denyInAppPurchases: (deny: boolean) => Promise<void>;
 
   /**
    * Allows in-app purchases.
    *
-   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases = false`.
-   * On Android the flag is persisted by this library.
+   * @deprecated Apple's `AppStoreSettings` has no `allowInAppPurchases`
+   * property; use {@link denyInAppPurchases}`(false)` instead. Kept for
+   * backwards compatibility.
+   *
+   * Not supported on Android — Android exposes no system-level API to block
+   * in-app purchases for a regular app, so this call has no effect there.
    * @platform ios
-   * @platform android
    * @returns {Promise<void>}
    */
   allowInAppPurchases: () => Promise<void>;
@@ -331,11 +337,14 @@ export type IScreenTimeAPI = {
   /**
    * Sets whether a password is required for purchases.
    *
+   * Mirrors Apple's
+   * [`AppStoreSettings.requirePasswordForPurchases`](https://developer.apple.com/documentation/managedsettings/appstoresettings/requirepasswordforpurchases).
    * On iOS this sets `ManagedSettingsStore.appStore.requirePasswordForPurchases`;
    * the current value is readable via {@link getStore} (`appStore.requirePasswordForPurchases`).
-   * On Android the flag is persisted by this library.
+   *
+   * Not supported on Android — Android exposes no system-level API to require
+   * a password for purchases for a regular app, so this call has no effect there.
    * @platform ios
-   * @platform android
    * @param {boolean} req whether a password is required for purchases
    * @returns {Promise<void>}
    */

@@ -113,21 +113,23 @@ Note: You'll need to install expo-build-properties if you haven't already:
 
 ## App Store purchase restrictions
 
-You can restrict App Store purchases through the following methods:
+These methods mirror Apple's [`ManagedSettings.AppStoreSettings`](https://developer.apple.com/documentation/managedsettings/appstoresettings) `appStore` properties, and each takes a boolean matching the corresponding property:
 
 ```typescript
-// in-app purchases
-await ScreenTime.denyInAppPurchases();  // block in-app purchases
-await ScreenTime.allowInAppPurchases(); // allow in-app purchases
+// in-app purchases (AppStoreSettings.denyInAppPurchases)
+await ScreenTime.denyInAppPurchases(true);  // block in-app purchases
+await ScreenTime.denyInAppPurchases(false); // allow in-app purchases
 
-// require a password for purchases (pass a boolean)
+// require a password for purchases (AppStoreSettings.requirePasswordForPurchases)
 await ScreenTime.requirePasswordForPurchases(true);
 await ScreenTime.requirePasswordForPurchases(false);
 ```
 
-On iOS these write to the corresponding [`ManagedSettings`](https://developer.apple.com/documentation/managedsettings/appstoresettings) `appStore` properties (`denyInAppPurchases` and `requirePasswordForPurchases`), and the current values can be read back from [`getStore()`](#sample-code) under `appStore`.
+On iOS the current values can be read back from [`getStore()`](#sample-code) under `appStore`.
 
-> **⚠️ These restrictions are only enforced on iOS.** Android exposes no system-level API to restrict in-app purchases or require a password for purchases for a regular app, so on Android these methods only persist the flag state to mirror the API — they do not actually enforce any restriction.
+> **`allowInAppPurchases()` is deprecated.** Apple's `AppStoreSettings` has no `allowInAppPurchases` property, so use `denyInAppPurchases(false)` instead. `allowInAppPurchases()` is kept only for backwards compatibility.
+
+> **⚠️ Not supported on Android.** Android exposes no system-level API to block in-app purchases or require a password for purchases for a regular app. These methods exist on Android only to mirror the API surface — they persist the flag state but do **not** enforce any restriction.
 
 ## Sample code
 ```typescript

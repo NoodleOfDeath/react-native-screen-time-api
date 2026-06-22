@@ -87,22 +87,40 @@ public class ScreenTimeAPIModule extends ReactContextBaseJavaModule {
         promise.resolve("success");
     }
 
-    // Android exposes no system-level in-app purchase restriction for a
-    // regular app, so the flags are only persisted here to mirror the iOS
-    // API; they are not enforced by the OS.
+    // App Store purchase restrictions are not supported on Android: the OS
+    // exposes no system-level API to block in-app purchases or require a
+    // password for purchases for a regular app. The flags are only persisted
+    // here to mirror the iOS API; they are NOT enforced by the OS.
 
+    /**
+     * Not supported on Android. In-app purchase blocking has no Android
+     * equivalent; the flag is persisted but never enforced by the OS.
+     */
     @ReactMethod
-    public void denyInAppPurchases(Promise promise) {
-        getPrefs().edit().putBoolean(KEY_DENY_IN_APP_PURCHASES, true).apply();
+    public void denyInAppPurchases(boolean deny, Promise promise) {
+        getPrefs().edit().putBoolean(KEY_DENY_IN_APP_PURCHASES, deny).apply();
         promise.resolve("success");
     }
 
+    /**
+     * Not supported on Android. In-app purchase blocking has no Android
+     * equivalent; the flag is persisted but never enforced by the OS.
+     *
+     * @deprecated Apple's {@code AppStoreSettings} has no {@code allowInAppPurchases}
+     *     property; use {@link #denyInAppPurchases(boolean, Promise) denyInAppPurchases(false)}
+     *     instead. Kept for backwards compatibility.
+     */
+    @Deprecated
     @ReactMethod
     public void allowInAppPurchases(Promise promise) {
         getPrefs().edit().putBoolean(KEY_DENY_IN_APP_PURCHASES, false).apply();
         promise.resolve("success");
     }
 
+    /**
+     * Not supported on Android. Requiring a password for purchases has no
+     * Android equivalent; the flag is persisted but never enforced by the OS.
+     */
     @ReactMethod
     public void requirePasswordForPurchases(boolean req, Promise promise) {
         getPrefs().edit().putBoolean(KEY_REQUIRE_PASSWORD_FOR_PURCHASES, req).apply();

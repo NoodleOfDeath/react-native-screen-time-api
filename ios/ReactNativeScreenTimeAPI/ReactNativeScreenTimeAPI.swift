@@ -232,10 +232,12 @@ public class ScreenTimeAPI: NSObject {
   }
 
   @objc
-  public func denyInAppPurchases() {
-    store.appStore.denyInAppPurchases = true
+  public func denyInAppPurchases(_ deny: Bool) {
+    store.appStore.denyInAppPurchases = deny
   }
 
+  /// Deprecated: `AppStoreSettings` has no `allowInAppPurchases` property.
+  /// Use `denyInAppPurchases(false)` instead. Kept for backwards compatibility.
   @objc
   public func allowInAppPurchases() {
     store.appStore.denyInAppPurchases = false
