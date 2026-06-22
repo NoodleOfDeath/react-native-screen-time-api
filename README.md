@@ -25,6 +25,7 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
   - [Request Family Controls capabilities](#request-family-controls-capabilities)
 - [Set up for Expo](#set-up-for-expo)
+- [App Store purchase restrictions](#app-store-purchase-restrictions)
 - [Sample code](#sample-code)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -109,6 +110,24 @@ entitlements: {
 Note: You'll need to install expo-build-properties if you haven't already:
 
 `expo install expo-build-properties`
+
+## App Store purchase restrictions
+
+You can restrict App Store purchases through the following methods:
+
+```typescript
+// in-app purchases
+await ScreenTime.denyInAppPurchases();  // block in-app purchases
+await ScreenTime.allowInAppPurchases(); // allow in-app purchases
+
+// require a password for purchases (pass a boolean)
+await ScreenTime.requirePasswordForPurchases(true);
+await ScreenTime.requirePasswordForPurchases(false);
+```
+
+On iOS these write to the corresponding [`ManagedSettings`](https://developer.apple.com/documentation/managedsettings/appstoresettings) `appStore` properties (`denyInAppPurchases` and `requirePasswordForPurchases`), and the current values can be read back from [`getStore()`](#sample-code) under `appStore`.
+
+> **⚠️ These restrictions are only enforced on iOS.** Android exposes no system-level API to restrict in-app purchases or require a password for purchases for a regular app, so on Android these methods only persist the flag state to mirror the API — they do not actually enforce any restriction.
 
 ## Sample code
 ```typescript

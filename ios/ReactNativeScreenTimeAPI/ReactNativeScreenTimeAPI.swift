@@ -230,7 +230,22 @@ public class ScreenTimeAPI: NSObject {
   public func allowAppInstallation() {
     store.application.denyAppInstallation = false
   }
-  
+
+  @objc
+  public func denyInAppPurchases() {
+    store.appStore.denyInAppPurchases = true
+  }
+
+  @objc
+  public func allowInAppPurchases() {
+    store.appStore.denyInAppPurchases = false
+  }
+
+  @objc
+  public func requirePasswordForPurchases(_ req: Bool) {
+    store.appStore.requirePasswordForPurchases = req
+  }
+
   @objc
   public func initializeMonitoring(_ startTimestamp: String = "00:00",
                                    end endTimestamp: String = "23:59",

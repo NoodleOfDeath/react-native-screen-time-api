@@ -303,7 +303,44 @@ export type IScreenTimeAPI = {
    * @returns {Promise<void>}
    */
   allowAppRemoval: () => Promise<void>;
-  
+
+  /**
+   * Denies in-app purchases.
+   *
+   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases = true`;
+   * the current value is readable via {@link getStore} (`appStore.denyInAppPurchases`).
+   * On Android the flag is persisted by this library (Android exposes no
+   * system-level in-app purchase restriction for a regular app).
+   * @platform ios
+   * @platform android
+   * @returns {Promise<void>}
+   */
+  denyInAppPurchases: () => Promise<void>;
+
+  /**
+   * Allows in-app purchases.
+   *
+   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases = false`.
+   * On Android the flag is persisted by this library.
+   * @platform ios
+   * @platform android
+   * @returns {Promise<void>}
+   */
+  allowInAppPurchases: () => Promise<void>;
+
+  /**
+   * Sets whether a password is required for purchases.
+   *
+   * On iOS this sets `ManagedSettingsStore.appStore.requirePasswordForPurchases`;
+   * the current value is readable via {@link getStore} (`appStore.requirePasswordForPurchases`).
+   * On Android the flag is persisted by this library.
+   * @platform ios
+   * @platform android
+   * @param {boolean} req whether a password is required for purchases
+   * @returns {Promise<void>}
+   */
+  requirePasswordForPurchases: (req: boolean) => Promise<void>;
+
   /**
    * @platform ios
    * @returns {Promise<string>}
