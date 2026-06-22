@@ -212,25 +212,46 @@ public class ScreenTimeAPI: NSObject {
   }
   
   @objc
-  public func denyAppRemoval() {
-    store.application.denyAppRemoval = true
+  public func denyAppRemoval(_ deny: Bool) {
+    store.application.denyAppRemoval = deny
   }
-  
+
+  /// Deprecated: `ApplicationSettings` has no `allowAppRemoval` property.
+  /// Use `denyAppRemoval(false)` instead. Kept for backwards compatibility.
   @objc
   public func allowAppRemoval() {
     store.application.denyAppRemoval = false
   }
-  
+
   @objc
-  public func denyAppInstallation() {
-    store.application.denyAppInstallation = true
+  public func denyAppInstallation(_ deny: Bool) {
+    store.application.denyAppInstallation = deny
   }
-  
+
+  /// Deprecated: `ApplicationSettings` has no `allowAppInstallation` property.
+  /// Use `denyAppInstallation(false)` instead. Kept for backwards compatibility.
   @objc
   public func allowAppInstallation() {
     store.application.denyAppInstallation = false
   }
-  
+
+  @objc
+  public func denyInAppPurchases(_ deny: Bool) {
+    store.appStore.denyInAppPurchases = deny
+  }
+
+  /// Deprecated: `AppStoreSettings` has no `allowInAppPurchases` property.
+  /// Use `denyInAppPurchases(false)` instead. Kept for backwards compatibility.
+  @objc
+  public func allowInAppPurchases() {
+    store.appStore.denyInAppPurchases = false
+  }
+
+  @objc
+  public func requirePasswordForPurchases(_ req: Bool) {
+    store.appStore.requirePasswordForPurchases = req
+  }
+
   @objc
   public func initializeMonitoring(_ startTimestamp: String = "00:00",
                                    end endTimestamp: String = "23:59",

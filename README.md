@@ -25,6 +25,7 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
   - [Add FamilyControls capability to your app](#add-familycontrols-capability-to-your-app)
   - [Request Family Controls capabilities](#request-family-controls-capabilities)
 - [Set up for Expo](#set-up-for-expo)
+- [App Store purchase restrictions](#app-store-purchase-restrictions)
 - [Sample code](#sample-code)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -109,6 +110,26 @@ entitlements: {
 Note: You'll need to install expo-build-properties if you haven't already:
 
 `expo install expo-build-properties`
+
+## App Store purchase restrictions
+
+These methods mirror Apple's [`ManagedSettings.AppStoreSettings`](https://developer.apple.com/documentation/managedsettings/appstoresettings) `appStore` properties, and each takes a boolean matching the corresponding property:
+
+```typescript
+// in-app purchases (AppStoreSettings.denyInAppPurchases)
+await ScreenTime.denyInAppPurchases(true);  // block in-app purchases
+await ScreenTime.denyInAppPurchases(false); // allow in-app purchases
+
+// require a password for purchases (AppStoreSettings.requirePasswordForPurchases)
+await ScreenTime.requirePasswordForPurchases(true);
+await ScreenTime.requirePasswordForPurchases(false);
+```
+
+On iOS the current values can be read back from [`getStore()`](#sample-code) under `appStore`.
+
+> **`allowInAppPurchases()` is deprecated.** Apple's `AppStoreSettings` has no `allowInAppPurchases` property, so use `denyInAppPurchases(false)` instead. `allowInAppPurchases()` is kept only for backwards compatibility.
+
+> **⚠️ Not supported on Android.** Android exposes no system-level API to block in-app purchases or require a password for purchases for a regular app. These methods exist on Android only to mirror the API surface — they persist the flag state but do **not** enforce any restriction.
 
 ## Sample code
 ```typescript

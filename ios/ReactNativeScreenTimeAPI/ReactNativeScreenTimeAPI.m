@@ -28,10 +28,13 @@ RCT_EXTERN_METHOD(setActivitySelection: (NSDictionary *) selection
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 RCT_EXTERN_METHOD(clearActivitySelection)
-RCT_EXTERN_METHOD(denyAppRemoval)
+RCT_EXTERN_METHOD(denyAppRemoval: (BOOL) deny)
 RCT_EXTERN_METHOD(allowAppRemoval)
-RCT_EXTERN_METHOD(denyAppInstallation)
+RCT_EXTERN_METHOD(denyAppInstallation: (BOOL) deny)
 RCT_EXTERN_METHOD(allowAppInstallation)
+RCT_EXTERN_METHOD(denyInAppPurchases: (BOOL) deny)
+RCT_EXTERN_METHOD(allowInAppPurchases)
+RCT_EXTERN_METHOD(requirePasswordForPurchases: (BOOL) req)
 RCT_EXTERN_METHOD(displayFamilyActivityPicker: (NSDictionary *) options
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)

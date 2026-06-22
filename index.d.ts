@@ -277,13 +277,25 @@ export type IScreenTimeAPI = {
   clearBlockedApplications: () => Promise<void>;
 
   /**
+   * Sets whether app installation is denied.
+   *
+   * Mirrors Apple's
+   * [`ApplicationSettings.denyAppInstallation`](https://developer.apple.com/documentation/managedsettings/applicationsettings/denyappinstallation).
+   * On iOS this sets `ManagedSettingsStore.application.denyAppInstallation`; the
+   * current value is readable via {@link getStore} (`application.denyAppInstallation`).
    * @platform ios
    * @platform android
+   * @param {boolean} deny whether app installation is denied
    * @returns {Promise<void>}
    */
-  denyAppInstallation: () => Promise<void>;
+  denyAppInstallation: (deny: boolean) => Promise<void>;
 
   /**
+   * Allows app installation.
+   *
+   * @deprecated Apple's `ApplicationSettings` has no `allowAppInstallation`
+   * property; use {@link denyAppInstallation}`(false)` instead. Kept for
+   * backwards compatibility.
    * @platform ios
    * @platform android
    * @returns {Promise<void>}
@@ -291,19 +303,77 @@ export type IScreenTimeAPI = {
   allowAppInstallation: () => Promise<void>;
 
   /**
+   * Sets whether app removal is denied.
+   *
+   * Mirrors Apple's
+   * [`ApplicationSettings.denyAppRemoval`](https://developer.apple.com/documentation/managedsettings/applicationsettings/denyappremoval).
+   * On iOS this sets `ManagedSettingsStore.application.denyAppRemoval`; the
+   * current value is readable via {@link getStore} (`application.denyAppRemoval`).
    * @platform ios
    * @platform android
+   * @param {boolean} deny whether app removal is denied
    * @returns {Promise<void>}
    */
-  denyAppRemoval: () => Promise<void>;
+  denyAppRemoval: (deny: boolean) => Promise<void>;
 
   /**
+   * Allows app removal.
+   *
+   * @deprecated Apple's `ApplicationSettings` has no `allowAppRemoval`
+   * property; use {@link denyAppRemoval}`(false)` instead. Kept for
+   * backwards compatibility.
    * @platform ios
    * @platform android
    * @returns {Promise<void>}
    */
   allowAppRemoval: () => Promise<void>;
-  
+
+  /**
+   * Sets whether in-app purchases are denied.
+   *
+   * Mirrors Apple's
+   * [`AppStoreSettings.denyInAppPurchases`](https://developer.apple.com/documentation/managedsettings/appstoresettings/denyinapppurchases).
+   * On iOS this sets `ManagedSettingsStore.appStore.denyInAppPurchases`; the
+   * current value is readable via {@link getStore} (`appStore.denyInAppPurchases`).
+   *
+   * Not supported on Android — Android exposes no system-level API to block
+   * in-app purchases for a regular app, so this call has no effect there.
+   * @platform ios
+   * @param {boolean} deny whether in-app purchases are denied
+   * @returns {Promise<void>}
+   */
+  denyInAppPurchases: (deny: boolean) => Promise<void>;
+
+  /**
+   * Allows in-app purchases.
+   *
+   * @deprecated Apple's `AppStoreSettings` has no `allowInAppPurchases`
+   * property; use {@link denyInAppPurchases}`(false)` instead. Kept for
+   * backwards compatibility.
+   *
+   * Not supported on Android — Android exposes no system-level API to block
+   * in-app purchases for a regular app, so this call has no effect there.
+   * @platform ios
+   * @returns {Promise<void>}
+   */
+  allowInAppPurchases: () => Promise<void>;
+
+  /**
+   * Sets whether a password is required for purchases.
+   *
+   * Mirrors Apple's
+   * [`AppStoreSettings.requirePasswordForPurchases`](https://developer.apple.com/documentation/managedsettings/appstoresettings/requirepasswordforpurchases).
+   * On iOS this sets `ManagedSettingsStore.appStore.requirePasswordForPurchases`;
+   * the current value is readable via {@link getStore} (`appStore.requirePasswordForPurchases`).
+   *
+   * Not supported on Android — Android exposes no system-level API to require
+   * a password for purchases for a regular app, so this call has no effect there.
+   * @platform ios
+   * @param {boolean} req whether a password is required for purchases
+   * @returns {Promise<void>}
+   */
+  requirePasswordForPurchases: (req: boolean) => Promise<void>;
+
   /**
    * @platform ios
    * @returns {Promise<string>}
