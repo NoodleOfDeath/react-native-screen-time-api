@@ -39,6 +39,21 @@ extension Application: Encodable {
   
 }
 
+extension ActivityCategory: Encodable {
+  
+  enum CodingKeys: String, CodingKey {
+    case token
+    case localizedDisplayName
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(token, forKey: .token)
+    try container.encode(localizedDisplayName, forKey: .localizedDisplayName)
+  }
+  
+}
+
 extension ApplicationSettings: Encodable {
   
   enum CodingKeys: String, CodingKey {
@@ -208,6 +223,21 @@ extension WebContentSettings: Encodable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(blockedByFilter.debugDescription, forKey: .blockedByFilter)
+  }
+  
+}
+
+extension WebDomain: Encodable {
+  
+  enum CodingKeys: String, CodingKey {
+    case domain
+    case token
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(domain, forKey: .domain)
+    try container.encode(token, forKey: .token)
   }
   
 }

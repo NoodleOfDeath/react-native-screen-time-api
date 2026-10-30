@@ -26,6 +26,7 @@ Access the Screen Time API for iOS and Wellbeing API for Android (coming soon). 
   - [Request Family Controls capabilities](#request-family-controls-capabilities)
 - [Set up for Expo](#set-up-for-expo)
 - [Sample code](#sample-code)
+- [iOS 26.4+ / iOS 27 features](#ios-264--ios-27-features)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 
@@ -190,6 +191,36 @@ const styles = StyleSheet.create({
 });
 
 export default MyApp;
+```
+
+## iOS 26.4+ / iOS 27 features
+
+Devices running iOS 26.4 or later, including all iOS 27 devices, get the newer Screen Time APIs below. Every method checks the OS version at runtime and rejects with the error code `unavailable` on older systems, so the library still supports iOS 16+. Call `getCapabilities()` to see what the current device supports.
+
+Apple's documentation lists no Screen Time APIs introduced in iOS 27.0 itself. The newest additions shipped in iOS 26.0, 26.4 and 26.5. Building these methods requires the Xcode 26.5 SDK or later.
+
+| Method | Minimum iOS | Notes |
+| --- | --- | --- |
+| `getCapabilities()` | 16.0 | Reports the OS version and which features below are available |
+| `getEffectiveDenyExplicitContent()` | 26.0 | Whether explicit content is denied on the device |
+| `getInstalledApplications()` | 26.4 | Real bundle IDs and app names, not opaque tokens* |
+| `getVisitedWebDomains()` | 26.4 | Real domain names* |
+| `getActivityCategories()` | 26.4 | Category display names* |
+| `getDeviceActivityData(options)` | 26.4 | Exports usage data (durations in ms)* |
+| `getStoreNames()`, `isStoreActive(name)`, `setStoreActive(active, name)`, `deleteStores(names)` | 26.5 | Manage named `ManagedSettingsStore`s. Pass `null` as `name` for this library's default store |
+| `refreshTokens({ applicationTokens, categoryTokens, webDomainTokens })` | 26.5 | Refreshes expired tokens you have persisted |
+
+\* These need `getAuthorizationStatus()` to return the new `approvedWithDataAccess` status and the `com.apple.developer.family-controls.app-and-website-usage` entitlement. Only one app per device can hold this status at a time. Per Apple, customer installs can get it only on devices in the EU signed in with an EU Apple Account. Everywhere else these calls fail.
+
+```typescript
+const capabilities = await ScreenTime.getCapabilities();
+if (capabilities.deviceActivityData &&
+    (await ScreenTime.getAuthorizationStatus()) === 'approvedWithDataAccess') {
+  const usage = await ScreenTime.getDeviceActivityData({
+    startDate: Date.now() - 7 * 24 * 60 * 60 * 1000,
+    segment: 'daily',
+  });
+}
 ```
 
 ## Contributing

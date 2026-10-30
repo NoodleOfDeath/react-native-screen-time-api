@@ -129,6 +129,10 @@ public class ScreenTimeAPI: NSObject {
                                      rejecter reject: @escaping RCTPromiseRejectBlock)
   {
     let _ = AuthorizationCenter.shared.$authorizationStatus.sink {
+      if #available(iOS 26.4, *), $0 == .approvedWithDataAccess {
+        resolve("approvedWithDataAccess")
+        return
+      }
       switch $0 {
       case .notDetermined:
         resolve("notDetermined")

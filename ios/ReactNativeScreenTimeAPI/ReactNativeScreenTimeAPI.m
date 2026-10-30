@@ -58,6 +58,36 @@ RCT_EXTERN_METHOD(getCategoryNames: (NSArray *) tokens
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 
+// iOS 26+ (runtime-gated, see getCapabilities)
+RCT_EXTERN_METHOD(getCapabilities: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getEffectiveDenyExplicitContent: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getInstalledApplications: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getVisitedWebDomains: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getActivityCategories: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getDeviceActivityData: (NSDictionary *) options
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(getStoreNames: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(isStoreActive: (NSString *) name
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(setStoreActive: (BOOL) active
+                  name: (NSString *) name
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(deleteStores: (NSArray *) names
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+RCT_EXTERN_METHOD(refreshTokens: (NSDictionary *) tokens
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+
 // web history
 RCT_EXTERN_METHOD(deleteAllWebHistory: (NSString *) identifier
                   resolver: (RCTPromiseResolveBlock) resolve
