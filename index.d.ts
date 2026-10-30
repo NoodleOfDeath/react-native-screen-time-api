@@ -6,7 +6,7 @@ export type FamilyControlsMember = 'child' | 'individual';
 /**
  * @platform ios
  */
-export type AuthorizationStatus = 'approved' | 'denied' | 'notDetermined';
+export type AuthorizationStatus = 'approved' | 'approvedWithDataAccess' | 'denied' | 'notDetermined';
 
 /**
  * @platform ios
@@ -200,6 +200,104 @@ export type ScreenTimeConfiguration = {
 };
 
 /**
+ * Which iOS 26+ Screen Time APIs the current device supports.
+ * @platform ios
+ */
+export type ScreenTimeCapabilities = {
+  systemVersion: string;
+  /** iOS 26.0+: `getEffectiveDenyExplicitContent` */
+  effectiveDenyExplicitContent: boolean;
+  /** iOS 26.4+: `getInstalledApplications`, `getVisitedWebDomains`, `getActivityCategories` */
+  familyActivityData: boolean;
+  /** iOS 26.4+: `getDeviceActivityData` */
+  deviceActivityData: boolean;
+  /** iOS 26.5+: `getStoreNames`, `isStoreActive`, `setStoreActive`, `deleteStores` */
+  storeManagement: boolean;
+  /** iOS 26.5+: `refreshTokens` */
+  tokenRefresh: boolean;
+};
+
+/**
+ * @platform ios
+ */
+export type ActivityCategory = {
+  token?: Token;
+  localizedDisplayName?: string;
+};
+
+/**
+ * @platform ios
+ */
+export type WebDomain = {
+  token?: Token;
+  domain?: string;
+};
+
+/**
+ * @platform ios
+ */
+export type ActivityTokens = {
+  applicationTokens?: Token[];
+  categoryTokens?: Token[];
+  webDomainTokens?: Token[];
+};
+
+/**
+ * Start and end dates are ISO 8601 strings; `duration` is in milliseconds.
+ * @platform ios
+ */
+export type EncodedDateInterval = {
+  startDate: string;
+  endDate: string;
+  duration: number;
+};
+
+/**
+ * @platform ios
+ */
+export type DeviceActivityDataOptions = {
+  /** Milliseconds since epoch or an ISO 8601 string. Defaults to the start of today. */
+  startDate?: number | string;
+  /** Milliseconds since epoch or an ISO 8601 string. Defaults to now. */
+  endDate?: number | string;
+  /** Defaults to `daily`. */
+  segment?: 'hourly' | 'daily' | 'weekly';
+  /** Defaults to `cached`. */
+  policy?: 'cached' | 'live';
+};
+
+/**
+ * All durations are in milliseconds and all dates are ISO 8601 strings.
+ * @platform ios
+ */
+export type DeviceActivityData = {
+  device: { name: string | null; model: 'iPhone' | 'iPad' | 'iPod' | 'mac' | 'unknown' };
+  user: { appleID: string | null; name: string | null; role: 'child' | 'individual' | 'unknown' };
+  lastUpdatedDate: string;
+  activitySegments: {
+    dateInterval: EncodedDateInterval;
+    totalActivityDuration: number;
+    firstPickup: string | null;
+    longestActivity: EncodedDateInterval | null;
+    totalPickupsWithoutApplicationActivity: number;
+    categories: {
+      category: ActivityCategory | null;
+      totalActivityDuration: number;
+      applications: {
+        application: Application | null;
+        totalActivityDuration: number;
+        numberOfPickups: number;
+        numberOfNotifications: number;
+      }[];
+      webDomains: {
+        webDomain: WebDomain | null;
+        totalActivityDuration: number;
+      }[];
+    }[];
+  }[];
+};
+
+/**
  * @platform ios
  */
 export declare class DateInterval {
@@ -355,6 +453,78 @@ export type IScreenTimeAPI = {
    * @returns {Promise<void>}
    */
   deleteWebHistoryForURL(url: string, identifier?: string): Promise<void>;
+
+  // iOS 26+ APIs. These reject with code `unavailable` on older systems;
+  // use `getCapabilities()` to check support first.
+
+  /**
+   * @platform ios
+   * @returns {Promise<ScreenTimeCapabilities>}
+   */
+  getCapabilities: () => Promise<ScreenTimeCapabilities>;
+
+  /**
+   * Whether explicit content is denied on this device by any store.
+   * @platform ios 26.0+
+   */
+  getEffectiveDenyExplicitContent: () => Promise<boolean>;
+
+  /**
+   * Installed apps with real bundle identifiers and display names.
+   * Requires `approvedWithDataAccess` authorization and the
+   * `com.apple.developer.family-controls.app-and-website-usage` entitlement.
+   * Apple only grants this to customer installs in the EU.
+   * @platform ios 26.4+
+   */
+  getInstalledApplications: () => Promise<Application[]>;
+
+  /**
+   * Visited web domains with real domain names. Same requirements as `getInstalledApplications`.
+   * @platform ios 26.4+
+   */
+  getVisitedWebDomains: () => Promise<WebDomain[]>;
+
+  /**
+   * All activity categories with display names. Same requirements as `getInstalledApplications`.
+   * @platform ios 26.4+
+   */
+  getActivityCategories: () => Promise<ActivityCategory[]>;
+
+  /**
+   * Exports device activity (usage) data. Same requirements as `getInstalledApplications`.
+   * @platform ios 26.4+
+   */
+  getDeviceActivityData: (options?: DeviceActivityDataOptions) => Promise<DeviceActivityData[]>;
+
+  /**
+   * Names of all ManagedSettings stores configured by this app.
+   * @platform ios 26.5+
+   */
+  getStoreNames: () => Promise<string[]>;
+
+  /**
+   * @platform ios 26.5+
+   * @param {string|null} name store name, or `null` for this library's default store
+   */
+  isStoreActive: (name: string | null) => Promise<boolean>;
+
+  /**
+   * Inactive stores are excluded from the device's effective settings.
+   * @platform ios 26.5+
+   * @param {string|null} name store name, or `null` for this library's default store
+   */
+  setStoreActive: (active: boolean, name: string | null) => Promise<void>;
+
+  /**
+   * @platform ios 26.5+
+   */
+  deleteStores: (names: string[]) => Promise<void>;
+
+  /**
+   * Refreshes expired tokens, e.g. ones persisted from a previous `FamilyActivitySelection`.
+   * @platform ios 26.5+
+   */
+  refreshTokens: (tokens: ActivityTokens) => Promise<Required<ActivityTokens>>;
 
 
 };
